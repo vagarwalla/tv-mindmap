@@ -48,6 +48,12 @@ describe('index.html structure', () => {
     expect(headMatch).not.toBeNull()
     expect(headMatch[1]).toContain('initTheme()')
   })
+
+  it('uses MindElixirLite.default as constructor — IIFE exports namespace not class', () => {
+    expect(html).not.toContain('new MindElixirLite(')
+    expect(html).not.toContain('new MindElixir(')
+    expect(html).toContain('MindElixirLite.default')
+  })
 })
 
 // ─── edit.html structure ──────────────────────────────────────────────────────
@@ -81,9 +87,11 @@ describe('edit.html structure', () => {
     expect(html).toContain('MindElixirLite.css')
   })
 
-  it('calls new MindElixirLite (not new MindElixir)', () => {
-    expect(html).toContain('new MindElixirLite(')
+  it('uses MindElixirLite.default as constructor — IIFE exports namespace not class', () => {
+    // new MindElixirLite() throws "not a constructor" — must use MindElixirLite.default
+    expect(html).not.toContain('new MindElixirLite(')
     expect(html).not.toContain('new MindElixir(')
+    expect(html).toContain('MindElixirLite.default')
   })
 
   it('calls mind.init(data) — data is NOT in the constructor call', () => {

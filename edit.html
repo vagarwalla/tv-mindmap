@@ -335,7 +335,8 @@
 
     // ─── Load editor module after auth ───────────────────────────────────────
     function loadEditor() {
-      if (typeof MindElixirLite === 'undefined') {
+      // The IIFE exports a namespace object — the constructor lives at .default
+      if (typeof MindElixirLite?.default !== 'function') {
         document.getElementById('map').innerHTML =
           '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#e55;font-size:0.9rem;">Could not load MindElixirLite from CDN. Check your network.</div>'
         return
@@ -478,7 +479,8 @@
           .then(r => r.json())
           .then(mup => {
             const data = convertMindmup(mup)
-            mind = new MindElixirLite({
+            const ME = MindElixirLite.default
+            mind = new ME({
               el: '#map',
               direction: MindElixirLite.SIDE,
               contextMenu: false,

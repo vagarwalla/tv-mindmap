@@ -35,4 +35,14 @@ describe('CDN smoke tests', () => {
     const text = await res.text()
     expect(text).toContain('.SIDE=')
   }, 10000)
+
+  it('IIFE exports a namespace object — constructor is at .default, not the top-level', async () => {
+    // This is the root cause of "MindElixirLite is not a constructor":
+    // var MindElixirLite = { default: Constructor, SIDE: 2, ... }
+    // new MindElixirLite() → TypeError; new MindElixirLite.default() → works
+    const res = await fetch(IIFE_URL)
+    const text = await res.text()
+    expect(text).toContain('Y.default=')  // constructor is at .default
+    expect(text).toContain('.SIDE=2')     // SIDE is on the namespace too, so MindElixirLite.SIDE works
+  }, 10000)
 })
