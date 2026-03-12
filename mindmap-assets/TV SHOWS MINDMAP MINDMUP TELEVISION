@@ -1,0 +1,1925 @@
+{
+  "id": "root",
+  "formatVersion": 3,
+  "ideas": {
+    "1": {
+      "id": 1,
+      "title": "UTOPIA",
+      "attr": {
+        "style": {
+          "background": "#00ccff",
+          "fontMultiplier": 1.25
+        },
+        "position": [
+          -59,
+          5196,
+          1
+        ]
+      },
+      "ideas": {
+        "-6.46875": {
+          "title": "BLACK MIRROR",
+          "id": 2,
+          "attr": {
+            "style": {
+              "background": "#00ccff",
+              "fontMultiplier": 1.25
+            },
+            "position": [
+              160.578125,
+              -35.875,
+              21
+            ]
+          },
+          "ideas": {}
+        },
+        "-5.77734375": {
+          "title": "THE AMERICANS",
+          "id": 52,
+          "attr": {
+            "position": [
+              387.1464843749998,
+              -238.56835937500273,
+              35
+            ],
+            "style": {
+              "background": "#40e0d0"
+            }
+          },
+          "ideas": {
+            "1": {
+              "title": "COVERT AFFAIRS",
+              "id": 54,
+              "ideas": {
+                "1": {
+                  "title": "CHUCK",
+                  "id": 55,
+                  "attr": {
+                    "style": {
+                      "background": "#40e0d0",
+                      "fontMultiplier": 1.25
+                    }
+                  }
+                },
+                "0.5": {
+                  "title": "HOMELAND",
+                  "id": 57,
+                  "attr": {
+                    "position": [
+                      16.799999999999955,
+                      -88,
+                      1
+                    ],
+                    "style": {
+                      "background": "#40e0d0"
+                    }
+                  },
+                  "ideas": {
+                    "1": {
+                      "title": "THE HONOURABLE WOMAN",
+                      "id": 61,
+                      "attr": {
+                        "style": {
+                          "background": "#40e0d0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "0.25": {
+                  "title": "NIKITA",
+                  "id": 73,
+                  "attr": {
+                    "style": {
+                      "background": "#40e0d0"
+                    }
+                  },
+                  "ideas": {}
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#40e0d0"
+                }
+              }
+            },
+            "2": {
+              "title": "DEUTSCHLAND 83",
+              "id": "136.25013989ac647960",
+              "attr": {
+                "style": {
+                  "background": "#ffffff"
+                }
+              }
+            },
+            "3": {
+              "title": "MR ROBOT",
+              "id": "147.25013989ac647960"
+            }
+          }
+        },
+        "17.4921875": {
+          "title": "ORPHAN BLACK",
+          "id": 4,
+          "attr": {
+            "style": {
+              "background": "#00ccff",
+              "fontMultiplier": 1.25
+            },
+            "position": [
+              154.90791302919482,
+              -608.7182252705115,
+              42
+            ]
+          },
+          "ideas": {
+            "0.5": {
+              "title": "ORANGE IS THE NEW BLACK",
+              "id": "121.25013989ac647960",
+              "ideas": {
+                "8.5": {
+                  "title": "FLEABAG",
+                  "id": "98.25013989ac647960",
+                  "ideas": {
+                    "3": {
+                      "title": "CRASHING",
+                      "id": "104.25013989ac647960",
+                      "attr": {
+                        "style": {
+                          "background": "#6b8e23"
+                        }
+                      }
+                    },
+                    "4": {
+                      "title": "SECRET DIARY OF A CALL GIRL",
+                      "id": "132.25013989ac647960",
+                      "attr": {
+                        "style": {
+                          "background": "#6b8e23"
+                        }
+                      },
+                      "ideas": {}
+                    },
+                    "5": {
+                      "title": "LOVESICK",
+                      "id": "182.6b4b.f913d1ca2-0374.77a5edad7",
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#6b8e23",
+                          "text": {
+                            "color": "#ffffff"
+                          }
+                        }
+                      }
+                    },
+                    "6": {
+                      "title": "HIGH MAINTENANCE",
+                      "id": "220.d350.3a8991758-ff0d.24ac81666",
+                      "attr": {},
+                      "ideas": {
+                        "1": {
+                          "title": "UNCORNLAND",
+                          "id": "221.d350.3a8991758-ff0d.24ac81666",
+                          "attr": {}
+                        }
+                      }
+                    },
+                    "7": {
+                      "title": "KILLING EVE",
+                      "id": "223.d350.3a8991758-ff0d.24ac81666",
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#6b8e23",
+                          "text": {
+                            "color": "#ffffff"
+                          }
+                        }
+                      }
+                    },
+                    "3.5": {
+                      "title": "Can't Cope Won't Cope",
+                      "id": "159.27cd7c074d93cc7c",
+                      "attr": {
+                        "position": [
+                          164.5,
+                          -111.76562499999977,
+                          3
+                        ],
+                        "style": {
+                          "background": "#6b8e23"
+                        }
+                      }
+                    },
+                    "3.75": {
+                      "title": "DERRY GIRLS",
+                      "id": "179.6b4b.f913d1ca2-0374.77a5edad7",
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#6b8e23",
+                          "text": {
+                            "color": "#ffffff"
+                          }
+                        }
+                      }
+                    },
+                    "1.5": {
+                      "title": "CHEWING GUM",
+                      "id": "137.25013989ac647960",
+                      "ideas": {
+                        "1": {
+                          "title": "CRAZYHEAD",
+                          "id": "139.25013989ac647960",
+                          "attr": {
+                            "style": {
+                              "width": 71,
+                              "background": "#6b8e23"
+                            },
+                            "position": [
+                              48.5,
+                              -96.10546875000273,
+                              1
+                            ]
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "background": "#6b8e23"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "background": "#6b8e23",
+                      "fontMultiplier": 1.25
+                    }
+                  }
+                },
+                "-10": {
+                  "title": "BROAD CITY",
+                  "id": "107.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "SEARCH PARTY",
+                      "id": "168.79df.0c0145849-a28e.4026818c",
+                      "attr": {
+                        "position": [
+                          212.74023437499977,
+                          45.20117187499909,
+                          1
+                        ]
+                      },
+                      "ideas": {
+                        "1": {
+                          "title": "FEEL GOOD",
+                          "id": "229.d350.3a8991758-ff0d.24ac81666"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "position": [
+                      242.1875,
+                      26.5625,
+                      9
+                    ]
+                  }
+                },
+                "-20": {
+                  "title": "YOU'RE THE WORST",
+                  "id": "127.25013989ac647960",
+                  "attr": {},
+                  "ideas": {
+                    "1": {
+                      "title": "BONDING",
+                      "id": "201.b518.9c8c93a31-5f0f.014da99c8"
+                    },
+                    "2": {
+                      "title": "THE OTHER TWO",
+                      "id": "230.d350.3a8991758-ff0d.24ac81666"
+                    }
+                  }
+                },
+                "-15": {
+                  "title": "(GIRLS)",
+                  "id": "143.25013989ac647960",
+                  "ideas": {},
+                  "attr": {
+                    "position": [
+                      14.429687499998636,
+                      184.39062499999545,
+                      7
+                    ]
+                  }
+                },
+                "-12.5": {
+                  "title": "UNREAL",
+                  "id": "126.25013989ac647960",
+                  "attr": {
+                    "position": [
+                      115.99218749999864,
+                      182.53125,
+                      8
+                    ]
+                  }
+                }
+              },
+              "attr": {
+                "position": [
+                  190.62499999999955,
+                  -6.25,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        "20.38671875": {
+          "title": "FIREFLY",
+          "id": 12,
+          "attr": {
+            "position": [
+              140.6386718749991,
+              127.74999999999272,
+              40
+            ],
+            "style": {
+              "background": "#A52A2A",
+              "fontMultiplier": 1.5
+            }
+          },
+          "ideas": {
+            "1": {
+              "title": "BATTLESTAR GALACTICA",
+              "id": 9,
+              "ideas": {
+                "2": {
+                  "title": "CAPRICA",
+                  "id": 8,
+                  "attr": {
+                    "style": {
+                      "background": "#40E0D0",
+                      "width": 52
+                    },
+                    "position": [
+                      212.37812499999995,
+                      -56.875,
+                      1
+                    ]
+                  }
+                },
+                "3": {
+                  "title": "THE EXPANSE",
+                  "id": "204.b518.9c8c93a31-5f0f.014da99c8",
+                  "ideas": {}
+                }
+              }
+            },
+            "2": {
+              "title": "BABYLON 5",
+              "id": "96.25013989ac647960",
+              "attr": {
+                "style": {
+                  "background": "#FFFFFF"
+                }
+              }
+            },
+            "3": {
+              "title": "DOCTOR WHO",
+              "id": "148.25013989ac647960",
+              "ideas": {
+                "1": {
+                  "title": "GOOD OMENS",
+                  "id": "198.b518.9c8c93a31-5f0f.014da99c8",
+                  "ideas": {
+                    "1": {
+                      "title": "AMERICAN GODS",
+                      "id": "199.b518.9c8c93a31-5f0f.014da99c8"
+                    }
+                  }
+                },
+                "2": {
+                  "title": "",
+                  "id": "231.d350.3a8991758-ff0d.24ac81666"
+                }
+              },
+              "attr": {}
+            },
+            "4": {
+              "title": "DOLLHOUSE",
+              "id": 74,
+              "attr": {
+                "position": [
+                  122.39453125000091,
+                  75.43945312500546,
+                  1
+                ]
+              }
+            }
+          }
+        },
+        "-2.888671875": {
+          "title": "BUFFY",
+          "id": 5,
+          "ideas": {
+            "1": {
+              "title": "VERONICA MARS",
+              "id": 7,
+              "ideas": {
+                "1": {
+                  "title": "IZOMBIE",
+                  "id": 10,
+                  "attr": {
+                    "style": {
+                      "background": "#40E0D0"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#40E0D0"
+                }
+              }
+            },
+            "2": {
+              "title": "ANGEL",
+              "id": 62,
+              "attr": {
+                "style": {
+                  "background": "#99cc00"
+                }
+              }
+            },
+            "4": {
+              "title": "FREAKS AND GEEKS",
+              "id": "130.25013989ac647960",
+              "ideas": {
+                "2": {
+                  "title": "THE END OF THE FUCKING WORLD",
+                  "id": "157.2ef2ae3483847d85"
+                },
+                "3": {
+                  "title": "I AM NOT OKAY WITH THIS",
+                  "id": "169.6b4b.f913d1ca2-0374.77a5edad7"
+                },
+                "4": {
+                  "title": "STRANGER THINGS",
+                  "id": "173.6b4b.f913d1ca2-0374.77a5edad7",
+                  "ideas": {
+                    "1": {
+                      "title": "EVERYTHING SUCKS",
+                      "id": "202.b518.9c8c93a31-5f0f.014da99c8"
+                    }
+                  }
+                },
+                "5": {
+                  "title": "SEX EDUCATION",
+                  "id": "180.6b4b.f913d1ca2-0374.77a5edad7",
+                  "ideas": {
+                    "1": {
+                      "title": "HEARTSTOPPER",
+                      "id": "208.d350.3a8991758-ff0d.24ac81666"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "fontMultiplier": 1.25
+                }
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "background": "#99cc00",
+              "fontMultiplier": 1.25
+            },
+            "position": [
+              37.67382812500091,
+              -446.4687500000073,
+              38
+            ]
+          }
+        },
+        "23.28125": {
+          "title": "BLETCHLEY CIRCLE",
+          "id": 53,
+          "ideas": {
+            "2": {
+              "title": "BROADCHURCH",
+              "id": 66,
+              "ideas": {
+                "3": {
+                  "title": "SHERLOCK",
+                  "id": 72,
+                  "attr": {
+                    "style": {}
+                  },
+                  "ideas": {
+                    "1": {
+                      "title": "AND THEN THERE WERE NONE",
+                      "id": "110.25013989ac647960"
+                    },
+                    "2": {
+                      "title": "WITNESS FOR THE PROSECUTION",
+                      "id": "155.2ef2ae3483847d85"
+                    }
+                  }
+                },
+                "5": {
+                  "title": "LES REVENANTS",
+                  "id": "105.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "TOP OF THE LAKE",
+                      "id": 78
+                    },
+                    "2": {
+                      "title": "BATES MOTEL",
+                      "id": "142.25013989ac647960"
+                    }
+                  }
+                },
+                "6": {
+                  "title": "HAPPY VALLEY",
+                  "id": "113.25013989ac647960",
+                  "attr": {
+                    "style": {
+                      "background": "#C0C0C0"
+                    }
+                  }
+                },
+                "2.5": {
+                  "title": "FORBRYDELSEN",
+                  "id": 90,
+                  "attr": {
+                    "style": {
+                      "background": "#ee82ee"
+                    }
+                  }
+                },
+                "2.75": {
+                  "title": "LUTHER",
+                  "id": 88,
+                  "attr": {
+                    "style": {
+                      "background": "#ee82ee"
+                    }
+                  }
+                },
+                "2.875": {
+                  "title": "DEXTER",
+                  "id": "134.25013989ac647960",
+                  "attr": {
+                    "style": {
+                      "background": "#ee82ee"
+                    }
+                  }
+                },
+                "2.625": {
+                  "title": "CRIMINAL (UK & GERMANY)",
+                  "id": "177.6b4b.f913d1ca2-0374.77a5edad7",
+                  "attr": {},
+                  "ideas": {
+                    "1": {
+                      "title": "FLIGHT ATTENDANT",
+                      "id": "218.d350.3a8991758-ff0d.24ac81666"
+                    }
+                  }
+                },
+                "2.9375": {
+                  "title": "THE FALL",
+                  "id": 70,
+                  "attr": {
+                    "style": {},
+                    "position": [
+                      133.23846858739898,
+                      3.246527194977716,
+                      1
+                    ]
+                  }
+                }
+              },
+              "attr": {
+                "position": [
+                  604.2480468749995,
+                  -327.4702148437502,
+                  3
+                ],
+                "parentConnector": {
+                  "lineStyle": "dashed"
+                }
+              }
+            },
+            "6": {
+              "title": "CASTLE",
+              "id": 75,
+              "ideas": {
+                "1": {
+                  "title": "FRINGE",
+                  "id": 76
+                },
+                "2": {
+                  "title": "GOTHAM",
+                  "id": 82,
+                  "attr": {
+                    "style": {
+                      "background": "#ff0000"
+                    }
+                  },
+                  "ideas": {
+                    "1": {
+                      "title": "DAREDEVIL",
+                      "id": "118.25013989ac647960",
+                      "attr": {
+                        "style": {
+                          "background": "#ff0000"
+                        }
+                      }
+                    }
+                  }
+                },
+                "3": {
+                  "title": "LIE TO ME",
+                  "id": 71,
+                  "ideas": {},
+                  "attr": {}
+                },
+                "4": {
+                  "title": "LONGMIRE",
+                  "id": 79,
+                  "attr": {
+                    "style": {}
+                  }
+                },
+                "6": {
+                  "title": "TWIN PEAKS",
+                  "id": "129.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "PSYCH",
+                      "id": "125.25013989ac647960",
+                      "ideas": {},
+                      "attr": {
+                        "style": {
+                          "background": "#ffffff"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "PUSHING DAISIES",
+                      "id": "128.25013989ac647960",
+                      "attr": {}
+                    },
+                    "3": {
+                      "title": "SEVERANCE",
+                      "id": "225.d350.3a8991758-ff0d.24ac81666"
+                    }
+                  }
+                },
+                "7": {
+                  "title": "LUCIFER",
+                  "id": "196.b518.9c8c93a31-5f0f.014da99c8"
+                }
+              }
+            },
+            "8": {
+              "title": "BOMB GIRLS",
+              "id": 56,
+              "attr": {
+                "style": {
+                  "background": "#e6e6fa"
+                }
+              }
+            },
+            "10": {
+              "title": "THE WIRE",
+              "id": "109.25013989ac647960",
+              "ideas": {
+                "1": {
+                  "title": "TRUE DETECTIVE",
+                  "id": 80,
+                  "attr": {
+                    "style": {
+                      "background": "#ffc0cb"
+                    }
+                  }
+                },
+                "2": {
+                  "title": "THE NIGHT OF",
+                  "id": "111.25013989ac647960",
+                  "attr": {
+                    "style": {
+                      "background": "#ffc0cb"
+                    }
+                  },
+                  "ideas": {
+                    "1": {
+                      "title": "CHERNOBYL",
+                      "id": "216.d350.3a8991758-ff0d.24ac81666"
+                    }
+                  }
+                },
+                "3": {
+                  "title": "GAME OF THRONES",
+                  "id": "117.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "WESTWORLD",
+                      "id": "124.25013989ac647960",
+                      "ideas": {
+                        "1": {
+                          "title": "LAST OF US",
+                          "id": "224.d350.3a8991758-ff0d.24ac81666"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "HIS DARK MATERIALS",
+                      "id": "176.6b4b.f913d1ca2-0374.77a5edad7"
+                    }
+                  }
+                },
+                "4": {
+                  "title": "SOPRANOS",
+                  "id": "162.27cd7c074d93cc7c"
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#ffc0cb",
+                  "fontMultiplier": 1.5
+                }
+              }
+            },
+            "20": {
+              "title": "THE HOUR",
+              "id": 84,
+              "ideas": {
+                "1": {
+                  "title": "THE NEWSROOM",
+                  "id": 86,
+                  "ideas": {
+                    "1": {
+                      "title": "THE WEST WING",
+                      "id": 87,
+                      "attr": {
+                        "style": {
+                          "background": "#ffffff"
+                        }
+                      },
+                      "ideas": {
+                        "1": {
+                          "title": "BORGEN",
+                          "id": "203.b518.9c8c93a31-5f0f.014da99c8"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "PEOPLE VS OJ",
+                      "id": "175.6b4b.f913d1ca2-0374.77a5edad7"
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "background": "#ffc0cb"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#e6e6fa"
+                },
+                "position": [
+                  100.09765625,
+                  615.234375,
+                  4
+                ]
+              }
+            },
+            "3.5": {
+              "title": "MAD MEN",
+              "id": 83,
+              "ideas": {
+                "1": {
+                  "title": "SUITS",
+                  "id": "133.25013989ac647960",
+                  "attr": {
+                    "position": [
+                      210.57128906249955,
+                      91.62060546874977,
+                      1
+                    ]
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#e6e6fa"
+                },
+                "position": [
+                  195.3125,
+                  -54.931640625,
+                  2
+                ]
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "background": "#e6e6fa"
+            },
+            "position": [
+              177.583984375,
+              483.95117187499636,
+              41
+            ]
+          }
+        },
+        "-9.234375": {
+          "title": "AVATAR",
+          "id": "190.b518.9c8c93a31-5f0f.014da99c8",
+          "ideas": {
+            "1": {
+              "title": "KORRA",
+              "id": "191.b518.9c8c93a31-5f0f.014da99c8"
+            },
+            "2": {
+              "title": "THE DRAGON PRINCE",
+              "id": "205.b518.9c8c93a31-5f0f.014da99c8",
+              "attr": {
+                "style": {
+                  "backgroundColor": "#FFFFFF"
+                }
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "fontMultiplier": 1.25
+            }
+          }
+        },
+        "-10.6171875": {
+          "title": "ARCANE",
+          "id": "227.d350.3a8991758-ff0d.24ac81666",
+          "attr": {
+            "style": {
+              "fontMultiplier": 1.25
+            }
+          }
+        },
+        "-12": {
+          "title": "LARRY SANDERS SHOW",
+          "id": 28,
+          "ideas": {
+            "2": {
+              "title": "THE COMEBACK",
+              "id": 34,
+              "ideas": {
+                "1": {
+                  "title": "WEB THERAPY",
+                  "id": 47,
+                  "ideas": {}
+                },
+                "2": {
+                  "title": "LOUIE",
+                  "id": "122.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "WILFRED",
+                      "id": "145.25013989ac647960"
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "background": "#ffffff"
+                    }
+                  }
+                },
+                "3": {
+                  "title": "BOJACK HORSEMAN",
+                  "id": "141.25013989ac647960",
+                  "ideas": {
+                    "1": {
+                      "title": "TUCA & BERTIE",
+                      "id": "183.6b4b.f913d1ca2-0374.77a5edad7",
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFFFF"
+                        }
+                      }
+                    },
+                    "3": {
+                      "title": "UNDONE",
+                      "id": "186.b518.9c8c93a31-5f0f.014da99c8",
+                      "ideas": {
+                        "1": {
+                          "title": "PALM SPRINGS",
+                          "id": "189.b518.9c8c93a31-5f0f.014da99c8",
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#CCFFFF"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "0.5": {
+                      "title": "ARCHER",
+                      "id": "184.b518.9c8c93a31-5f0f.014da99c8",
+                      "ideas": {
+                        "1": {
+                          "title": "A VERY SECRET SERVICE",
+                          "id": "187.b518.9c8c93a31-5f0f.014da99c8",
+                          "attr": {
+                            "position": [
+                              37.188454151152655,
+                              -119.82343738079271,
+                              1
+                            ]
+                          }
+                        }
+                      },
+                      "attr": {}
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "fontMultiplier": 1.25
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "background": "#ffc0cb",
+                  "fontMultiplier": 1.25
+                }
+              }
+            },
+            "5": {
+              "title": "WHO IS AMERICA?",
+              "id": "161.27cd7c074d93cc7c"
+            },
+            "6": {
+              "title": "SUMMER HEIGHTS HEIGH",
+              "id": "164.79df.0c0145849-a28e.4026818c",
+              "ideas": {
+                "1": {
+                  "title": "J'aimie: Private School Girl",
+                  "id": "165.79df.0c0145849-a28e.4026818c",
+                  "attr": {}
+                }
+              }
+            },
+            "7": {
+              "title": "PARTY DOWN",
+              "id": "226.d350.3a8991758-ff0d.24ac81666"
+            },
+            "1.5": {
+              "title": "ARRESTED DEVELOPMENT",
+              "id": "151.25013989ac647960",
+              "attr": {
+                "style": {
+                  "fontMultiplier": 1.25
+                }
+              }
+            },
+            "2.25": {
+              "title": "GRAVITY FALLS",
+              "id": "106.25013989ac647960",
+              "ideas": {
+                "2": {
+                  "title": "DISENCHANTED",
+                  "id": "211.d350.3a8991758-ff0d.24ac81666"
+                },
+                "3": {
+                  "title": "OVER THE GARDEN WALL",
+                  "id": "212.d350.3a8991758-ff0d.24ac81666"
+                }
+              },
+              "attr": {}
+            }
+          },
+          "attr": {
+            "position": [
+              256.2119140625,
+              -49.82421875000057,
+              27
+            ]
+          }
+        }
+      }
+    },
+    "2": {
+      "title": "PLEASE LIKE ME",
+      "id": "193.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "position": [
+          -92,
+          4396,
+          1
+        ],
+        "style": {
+          "backgroundColor": "#C0C0C0"
+        }
+      }
+    },
+    "3": {
+      "title": "SKINS",
+      "id": 63,
+      "ideas": {
+        "1": {
+          "title": "GLUE",
+          "id": 69,
+          "attr": {
+            "style": {
+              "background": "#6b8e23"
+            }
+          }
+        },
+        "2": {
+          "title": "MY MAD FAT DIARY",
+          "id": "103.25013989ac647960",
+          "attr": {
+            "style": {
+              "background": "#6b8e23"
+            }
+          }
+        },
+        "3": {
+          "title": "FRESH MEAT",
+          "id": "100.25013989ac647960",
+          "ideas": {
+            "1": {
+              "title": "BAD EDUCATION",
+              "id": "166.79df.0c0145849-a28e.4026818c",
+              "attr": {
+                "style": {
+                  "background": "#6b8e23"
+                }
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "background": "#6b8e23"
+            },
+            "position": [
+              240.07812500000023,
+              -11.528124999999704,
+              1
+            ]
+          }
+        },
+        "4": {
+          "title": "MISFITS",
+          "id": "102.25013989ac647960",
+          "attr": {
+            "style": {
+              "background": "#6b8e23"
+            }
+          },
+          "ideas": {
+            "1": {
+              "title": "THE ALIENS",
+              "id": "150.25013989ac647960",
+              "attr": {
+                "style": {
+                  "background": "#6b8e23"
+                }
+              }
+            }
+          }
+        }
+      },
+      "attr": {
+        "style": {
+          "background": "#6b8e23",
+          "width": 80.6172,
+          "fontMultiplier": 1.25
+        },
+        "position": [
+          -441,
+          4458,
+          1
+        ]
+      }
+    },
+    "4": {
+      "title": "SURVIVOR",
+      "id": "194.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "position": [
+          -1210,
+          5476,
+          1
+        ],
+        "style": {
+          "fontMultiplier": 1.5,
+          "backgroundColor": "#339966",
+          "text": {
+            "color": "#FFFFFF"
+          }
+        }
+      }
+    },
+    "5": {
+      "title": "DESIGNATED SURVIVOR",
+      "id": "200.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "position": [
+          -93,
+          6458,
+          1
+        ],
+        "style": {
+          "backgroundColor": "#C0C0C0"
+        }
+      }
+    },
+    "6": {
+      "title": "THE OFFICE UK",
+      "id": 14,
+      "attr": {
+        "style": {
+          "background": "#6b8e23",
+          "fontMultiplier": 1.5
+        },
+        "position": [
+          -1145,
+          6053,
+          1
+        ]
+      },
+      "ideas": {
+        "1": {
+          "title": "STATH LETS FLATS",
+          "id": "206.d350.3a8991758-ff0d.24ac81666",
+          "ideas": {
+            "1": {
+              "title": "WHAT WE DO IN THE SHADOWS",
+              "id": "207.d350.3a8991758-ff0d.24ac81666",
+              "attr": {
+                "position": [
+                  158.94936800002984,
+                  11.482761502264111,
+                  1
+                ]
+              },
+              "ideas": {
+                "1": {
+                  "title": "OUR FLAG MEANS DEATH",
+                  "id": "217.d350.3a8991758-ff0d.24ac81666"
+                }
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "backgroundColor": "#008000",
+              "text": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        },
+        "2": {
+          "title": "FAWLTY TOWERS",
+          "id": "219.d350.3a8991758-ff0d.24ac81666"
+        }
+      }
+    },
+    "7": {
+      "title": "THE OFFICE US",
+      "id": 16,
+      "ideas": {
+        "2": {
+          "title": "30 ROCK",
+          "id": 17,
+          "ideas": {
+            "1": {
+              "title": "UNBREAKABLE KIMMY SCHMIDT",
+              "id": 44,
+              "attr": {
+                "position": [
+                  31.527343749999773,
+                  -87.44726562499272,
+                  1
+                ],
+                "style": {
+                  "width": 146
+                }
+              }
+            },
+            "0.5": {
+              "title": "CRAZY EX-GIRLFRIEND",
+              "id": "158.405e92f21018089c",
+              "attr": {}
+            }
+          },
+          "attr": {
+            "position": [
+              235.47265625000023,
+              -1.552734375007276,
+              6
+            ]
+          }
+        },
+        "4.5": {
+          "title": "PARKS AND RECREATION",
+          "id": 50,
+          "attr": {
+            "position": [
+              185,
+              121,
+              11
+            ]
+          },
+          "ideas": {
+            "2": {
+              "title": "TRIAL AND ERROR",
+              "id": "160.27cd7c074d93cc7c",
+              "attr": {
+                "position": [
+                  224.21484374999977,
+                  27,
+                  2
+                ]
+              }
+            },
+            "12": {
+              "title": "MASTER OF NONE",
+              "id": "119.25013989ac647960",
+              "attr": {
+                "position": [
+                  225,
+                  71,
+                  3
+                ]
+              }
+            }
+          }
+        },
+        "0.75": {
+          "title": "BROOKLYN 99",
+          "id": 19,
+          "attr": {
+            "position": [
+              142,
+              -243.8749999999999,
+              3
+            ],
+            "style": {}
+          },
+          "ideas": {
+            "1": {
+              "title": "SILICON  VALLEY",
+              "id": "120.25013989ac647960",
+              "ideas": {
+                "1": {
+                  "title": "AVENUE 5",
+                  "id": "172.6b4b.f913d1ca2-0374.77a5edad7"
+                }
+              }
+            },
+            "2": {
+              "title": "CUCKOOO (S1)",
+              "id": "178.6b4b.f913d1ca2-0374.77a5edad7"
+            }
+          }
+        },
+        "5.5": {
+          "title": "THE MINDY PROJECT",
+          "id": "115.25013989ac647960",
+          "attr": {
+            "position": [
+              269,
+              239,
+              12
+            ]
+          },
+          "ideas": {
+            "1": {
+              "title": "NEVER HAVE I EVER",
+              "id": "195.b518.9c8c93a31-5f0f.014da99c8"
+            },
+            "2": {
+              "title": "SEX LIVES OF COLLEGE GIRLS",
+              "id": "228.d350.3a8991758-ff0d.24ac81666"
+            }
+          }
+        },
+        "6.5": {
+          "title": "VEEP",
+          "id": "140.25013989ac647960"
+        },
+        "1.5": {
+          "title": "MODERN FAMILY",
+          "id": 26,
+          "ideas": {
+            "1": {
+              "title": "BLACKISH",
+              "id": 38,
+              "attr": {
+                "style": {
+                  "background": "#808080"
+                }
+              }
+            },
+            "2": {
+              "title": "THE GOLDBERGS",
+              "id": 40,
+              "ideas": {}
+            },
+            "3": {
+              "title": "FRESH OFF THE BOAT",
+              "id": "94.25013989ac647960",
+              "attr": {
+                "style": {
+                  "background": "#808080"
+                }
+              }
+            },
+            "4": {
+              "title": "JANE THE VIRGIN",
+              "id": "97.25013989ac647960",
+              "attr": {
+                "position": [
+                  288.2773437499998,
+                  101.30273437500728,
+                  1
+                ]
+              }
+            },
+            "5": {
+              "title": "SCHITT'S CREEK",
+              "id": "174.6b4b.f913d1ca2-0374.77a5edad7"
+            }
+          },
+          "attr": {
+            "position": [
+              338.7226562500002,
+              -170.30273437500728,
+              4
+            ]
+          }
+        },
+        "7.5": {
+          "title": "AMERICAN VANDAL",
+          "id": "170.6b4b.f913d1ca2-0374.77a5edad7"
+        },
+        "1.75": {
+          "title": "COMMUNITY",
+          "id": 18,
+          "ideas": {
+            "1": {
+              "title": "ATLANTA",
+              "id": "116.25013989ac647960",
+              "attr": {
+                "style": {
+                  "background": "#FFFFFF"
+                }
+              }
+            }
+          },
+          "attr": {
+            "position": [
+              408,
+              53,
+              13
+            ],
+            "style": {
+              "fontMultiplier": 1.25,
+              "backgroundColor": "#33CCCC"
+            }
+          }
+        }
+      },
+      "attr": {
+        "style": {
+          "background": "#33CCCC",
+          "fontMultiplier": 1.25
+        },
+        "position": [
+          -987,
+          6431,
+          1
+        ]
+      }
+    }
+  },
+  "attr": {},
+  "links": [
+    {
+      "ideaIdFrom": 10,
+      "ideaIdTo": 1,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 34,
+      "ideaIdTo": 14,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 17,
+      "ideaIdTo": 18,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 50,
+      "ideaIdTo": 18,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 50,
+      "ideaIdTo": 17,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 55,
+      "ideaIdTo": 19,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 69,
+      "ideaIdTo": 66,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 73,
+      "ideaIdTo": 5,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 74,
+      "ideaIdTo": 5,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 74,
+      "ideaIdTo": 73,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 12,
+      "ideaIdTo": 9,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 19,
+      "ideaIdTo": 53,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 76,
+      "ideaIdTo": 4,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 79,
+      "ideaIdTo": 12,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 74,
+      "ideaIdTo": 8,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed",
+          "arrow": true
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 2,
+      "ideaIdTo": 74,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "119.25013989ac647960",
+      "ideaIdTo": "115.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "133.25013989ac647960",
+      "ideaIdTo": 71,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "139.25013989ac647960",
+      "ideaIdTo": "102.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "139.25013989ac647960",
+      "ideaIdTo": 5,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "140.25013989ac647960",
+      "ideaIdTo": 87,
+      "attr": {
+        "style": {
+          "color": "#0000FF",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "133.25013989ac647960",
+      "ideaIdTo": 86,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "100.25013989ac647960",
+      "ideaIdTo": "165.79df.0c0145849-a28e.4026818c",
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "168.79df.0c0145849-a28e.4026818c",
+      "ideaIdTo": 19,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "168.79df.0c0145849-a28e.4026818c",
+      "ideaIdTo": 18,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "168.79df.0c0145849-a28e.4026818c",
+      "ideaIdTo": 66,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "178.6b4b.f913d1ca2-0374.77a5edad7",
+      "ideaIdTo": 26,
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "174.6b4b.f913d1ca2-0374.77a5edad7",
+      "ideaIdTo": "165.79df.0c0145849-a28e.4026818c",
+      "attr": {
+        "style": {
+          "color": "#FF0000",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 55,
+      "ideaIdTo": "187.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "176.6b4b.f913d1ca2-0374.77a5edad7",
+      "ideaIdTo": "190.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "151.25013989ac647960",
+      "ideaIdTo": "184.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "193.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "130.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "193.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "98.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "193.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "168.79df.0c0145849-a28e.4026818c",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "130.25013989ac647960",
+      "ideaIdTo": 63,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "198.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "196.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "200.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": 87,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "200.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": 54,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "201.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "169.6b4b.f913d1ca2-0374.77a5edad7",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "203.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": 90,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": false
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "203.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": "200.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "204.b518.9c8c93a31-5f0f.014da99c8",
+      "ideaIdTo": 79,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "207.d350.3a8991758-ff0d.24ac81666",
+      "ideaIdTo": 16,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "106.25013989ac647960",
+      "ideaIdTo": "190.b518.9c8c93a31-5f0f.014da99c8",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "220.d350.3a8991758-ff0d.24ac81666",
+      "ideaIdTo": "107.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "229.d350.3a8991758-ff0d.24ac81666",
+      "ideaIdTo": "100.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": "225.d350.3a8991758-ff0d.24ac81666",
+      "ideaIdTo": "124.25013989ac647960",
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "solid",
+          "arrow": "to"
+        }
+      }
+    }
+  ],
+  "title": ""
+}

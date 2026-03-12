@@ -4,133 +4,241 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TV Shows Mind Map</title>
+  <script src="https://cdn.jsdelivr.net/npm/mind-elixir@4/dist/MindElixir.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@4/dist/style.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #0f0f0f;
       color: #f0f0f0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      overflow: hidden;
     }
 
     header {
-      width: 100%;
-      padding: 2rem;
-      text-align: center;
+      padding: 0.75rem 1.5rem;
       border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: #111;
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
 
     header p {
-      margin-top: 0.5rem;
-      color: #888;
-      font-size: 0.95rem;
-    }
-
-    main {
-      width: 100%;
-      max-width: 1400px;
-      padding: 2rem;
-      flex: 1;
-    }
-
-    .mindmap-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    .mindmap-container img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      border: 1px solid #222;
-      cursor: zoom-in;
-      transition: transform 0.2s ease;
-    }
-
-    .mindmap-container img:active {
-      cursor: zoom-out;
-    }
-
-    .placeholder {
-      width: 100%;
-      min-height: 400px;
-      border: 2px dashed #333;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       color: #555;
-      gap: 0.75rem;
+      font-size: 0.75rem;
+      margin-top: 2px;
     }
 
-    .placeholder svg {
-      width: 48px;
-      height: 48px;
-      opacity: 0.4;
+    .controls {
+      display: flex;
+      gap: 0.5rem;
     }
 
-    .placeholder p {
-      font-size: 0.95rem;
+    .controls button {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #bbb;
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
 
-    footer {
-      padding: 1.5rem;
-      color: #444;
-      font-size: 0.8rem;
+    .controls button:hover {
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    #map {
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    me-mind-elixir, .map-container {
+      background: #0f0f0f !important;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>TV Shows Mind Map</h1>
-    <p>A visual map of every show — watched, watching, and want to watch.</p>
+    <div>
+      <h1>TV Shows Mind Map</h1>
+      <p>Scroll to zoom · Drag to pan · Click nodes to collapse/expand</p>
+    </div>
+    <div class="controls">
+      <button onclick="mind.scale(1.25)">＋</button>
+      <button onclick="mind.scale(0.8)">－</button>
+      <button onclick="mind.toCenter()">⊙ Center</button>
+      <button id="toggleBtn" onclick="toggleAll()">Expand All</button>
+    </div>
   </header>
 
-  <main>
-    <div class="mindmap-container">
-      <!-- Once you drop your mindmap image into mindmap-assets/, update the src below -->
-      <!-- <img src="mindmap-assets/tv-mindmap.png" alt="TV Shows Mind Map" /> -->
-
-      <div class="placeholder">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <p>Drop your mind map image into <code>mindmap-assets/</code> and update the <code>src</code> in index.html.</p>
-      </div>
-    </div>
-  </main>
-
-  <footer>tv.vaidehiagarwalla.com</footer>
+  <div id="map"></div>
 
   <script>
-    // Click to toggle full-size zoom
-    const img = document.querySelector('.mindmap-container img');
-    if (img) {
-      let zoomed = false;
-      img.addEventListener('click', () => {
-        zoomed = !zoomed;
-        img.style.transform = zoomed ? 'scale(1.8)' : 'scale(1)';
-        img.style.transformOrigin = 'top center';
-        img.style.cursor = zoomed ? 'zoom-out' : 'zoom-in';
-      });
+    // ─── Style helpers ───────────────────────────────────────────────────────
+
+    function getBg(style) {
+      return style?.background || style?.backgroundColor || null
+    }
+
+    function getTextColor(style) {
+      if (style?.text?.color) return style.text.color
+      const bg = getBg(style)
+      if (bg) return contrastColor(bg)
+      return '#e0e0e0'
+    }
+
+    function getFontSize(fontMultiplier) {
+      // MindMup fontMultiplier: 1 = ~12px, 1.25 = ~15px, 1.5 = ~18px
+      const base = 12
+      return Math.round(base * (fontMultiplier || 1)) + 'px'
+    }
+
+    function contrastColor(hex) {
+      try {
+        const c = hex.replace('#', '')
+        const r = parseInt(c.substr(0,2), 16)
+        const g = parseInt(c.substr(2,2), 16)
+        const b = parseInt(c.substr(4,2), 16)
+        const lum = (0.299*r + 0.587*g + 0.114*b) / 255
+        return lum > 0.55 ? '#111111' : '#ffffff'
+      } catch { return '#ffffff' }
+    }
+
+    // ─── MindMup → Mind Elixir converter ────────────────────────────────────
+
+    function convertNode(mupNode) {
+      const mupStyle = mupNode.attr?.style || {}
+      const bg = getBg(mupStyle)
+      const textColor = getTextColor(mupStyle)
+      const fontSize = getFontSize(mupStyle.fontMultiplier)
+
+      const node = {
+        id: String(mupNode.id ?? Math.random().toString(36).slice(2)),
+        topic: mupNode.title || '',
+        children: [],
+      }
+
+      // Build style object — only set if we have real values
+      const styleObj = {}
+      if (bg) styleObj.background = bg
+      if (textColor) styleObj.color = textColor
+      if (mupStyle.fontMultiplier && mupStyle.fontMultiplier !== 1) {
+        styleObj.fontSize = fontSize
+      }
+      if (Object.keys(styleObj).length) node.style = styleObj
+
+      // Recurse children, sorted by their numeric key (preserves order)
+      if (mupNode.ideas && Object.keys(mupNode.ideas).length) {
+        const sorted = Object.entries(mupNode.ideas)
+          .sort(([a], [b]) => parseFloat(a) - parseFloat(b))
+        for (const [, child] of sorted) {
+          node.children.push(convertNode(child))
+        }
+      }
+
+      return node
+    }
+
+    function convertMindmup(mup) {
+      const root = {
+        id: 'root',
+        topic: 'TV Shows',
+        style: {
+          background: '#1a1a2e',
+          color: '#ffffff',
+          fontSize: '18px',
+          fontWeight: 'bold',
+        },
+        children: [],
+      }
+
+      if (mup.ideas) {
+        const sorted = Object.entries(mup.ideas)
+          .sort(([a], [b]) => parseFloat(a) - parseFloat(b))
+        for (const [, child] of sorted) {
+          root.children.push(convertNode(child))
+        }
+      }
+
+      return { nodeData: root }
+    }
+
+    // ─── Init ────────────────────────────────────────────────────────────────
+
+    let mind
+    let allExpanded = false
+
+    fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
+      .then(r => r.json())
+      .then(mup => {
+        const data = convertMindmup(mup)
+
+        mind = new MindElixir({
+          el: '#map',
+          direction: MindElixir.SIDE,
+          draggable: true,
+          contextMenu: false,
+          toolBar: false,
+          nodeMenu: false,
+          keypress: true,
+          theme: {
+            name: 'dark',
+            palette: [
+              '#00ccff', '#40e0d0', '#6b8e23', '#33CCCC',
+              '#ee82ee', '#ffc0cb', '#99cc00', '#C0C0C0',
+            ],
+            cssVar: {
+              '--main-color':         '#ffffff',
+              '--main-bgcolor':       '#1a1a2e',
+              '--color':              '#e0e0e0',
+              '--bgcolor':            '#1e1e2e',
+              '--panel-color':        '#f0f0f0',
+              '--panel-bgcolor':      '#2a2a3e',
+              '--panel-border-color': '#444',
+              '--selected-color':     '#ffffff',
+              '--selected-bgcolor':   '#4a4a7a',
+              '--line-color':         '#555577',
+              '--line-width':         '2px',
+              '--root-color':         '#ffffff',
+              '--root-bgcolor':       '#1a1a2e',
+              '--root-radius':        '8px',
+              '--radius':             '5px',
+            },
+          },
+          data,
+        })
+
+        mind.init()
+      })
+      .catch(err => {
+        document.getElementById('map').innerHTML =
+          `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555;font-size:0.9rem;">
+            Failed to load mind map: ${err.message}
+          </div>`
+      })
+
+    function toggleAll() {
+      if (!mind) return
+      allExpanded = !allExpanded
+      allExpanded ? mind.expandAll() : mind.collapseAll()
+      document.getElementById('toggleBtn').textContent =
+        allExpanded ? 'Collapse All' : 'Expand All'
     }
   </script>
 </body>
