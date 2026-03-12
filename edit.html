@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Edit · TV Shows Mind Map</title>
-  <script src="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixirLite.iife.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixir.css">
+  <script src="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.iife.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -220,6 +220,11 @@
 
     // ─── Load editor module after auth ───────────────────────────────────────
     function loadEditor() {
+      if (typeof MindElixirLite === 'undefined') {
+        document.getElementById('map').innerHTML =
+          '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#e55;font-size:0.9rem;">Could not load MindElixirLite from CDN. Check your network.</div>'
+        return
+      }
       const s = document.createElement('script')
       s.type = 'module'
       s.textContent = `
@@ -231,13 +236,11 @@
           .then(r => r.json())
           .then(mup => {
             const data = convertMindmup(mup)
-            mind = new MindElixir({
+            mind = new MindElixirLite({
               el: '#map',
-              direction: MindElixir.SIDE,
-              draggable: true,
-              contextMenu: true,
-              toolBar: true,
-              nodeMenu: true,
+              direction: MindElixirLite.SIDE,
+              contextMenu: false,
+              toolBar: false,
               keypress: true,
               theme: {
                 name: 'dark',
@@ -252,9 +255,8 @@
                   '--root-bgcolor': '#1a1a2e', '--root-radius': '8px', '--radius': '5px',
                 },
               },
-              data,
             })
-            mind.init()
+            mind.init(data)
             window.mind = mind
           })
           .catch(err => {
