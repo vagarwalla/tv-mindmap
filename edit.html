@@ -172,12 +172,33 @@
         <button onclick="mind && mind.scale(1.25)">＋</button>
         <button onclick="mind && mind.scale(0.8)">－</button>
         <button onclick="mind && mind.toCenter()">⊙ Center</button>
+        <button onclick="openSearchPanel()">+ Add Show</button>
         <button id="saveBtn" onclick="save()">Save</button>
         <span id="saveStatus"></span>
         <a href="/">← View</a>
       </div>
     </header>
     <div id="map"></div>
+
+    <!-- TV Show Search Panel -->
+    <div id="showSearchPanel" style="display:none; position:fixed; right:0; top:0; bottom:0; width:360px; background:#161616; border-left:1px solid #2a2a2a; z-index:50; flex-direction:column;">
+      <div style="padding:1rem; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-size:1rem; font-weight:600;">Add Show</h2>
+        <button onclick="closeSearchPanel()" style="background:none;border:none;color:#888;cursor:pointer;font-size:1.2rem;">&#x2715;</button>
+      </div>
+      <div style="padding:1rem; border-bottom:1px solid #222;">
+        <input id="showSearchInput" type="text" placeholder="Search TV shows&#x2026;" autocomplete="off"
+          style="width:100%;background:#0f0f0f;border:1px solid #333;border-radius:6px;color:#f0f0f0;padding:0.5rem 0.75rem;font-size:0.9rem;outline:none;" />
+      </div>
+      <div id="showSearchResults" style="flex:1;overflow-y:auto;"></div>
+      <div id="showSeasonPicker" style="display:none; padding:1rem; border-top:1px solid #222; max-height:280px; overflow-y:auto;"></div>
+      <div style="padding:1rem; border-top:1px solid #222;">
+        <button id="addShowBtn" onclick="addShowToMap()" disabled
+          style="width:100%;background:#1a3a1a;border:1px solid #2a5a2a;color:#6ddb6d;padding:0.5rem;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;">
+          Add to Map
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -218,6 +239,15 @@
       loadEditor()
     }
 
+    // ─── Search panel toggle (static, no auth needed) ─────────────────────────
+    window.openSearchPanel = function() {
+      document.getElementById('showSearchPanel').style.display = 'flex'
+      document.getElementById('showSearchInput').focus()
+    }
+    window.closeSearchPanel = function() {
+      document.getElementById('showSearchPanel').style.display = 'none'
+    }
+
     // ─── Load editor module after auth ───────────────────────────────────────
     function loadEditor() {
       if (typeof MindElixirLite === 'undefined') {
@@ -229,8 +259,111 @@
       s.type = 'module'
       s.textContent = `
         import { convertMindmup, convertToMindmup } from './src/utils.js'
+        import { searchShows, getSeasons, formatShowTopic } from './src/tv-search.js'
 
         let mind
+        let selectedShowForAdd = null
+        let selectedSeasonsForAdd = new Set()
+
+        // ─── Search panel logic ───────────────────────────────────────────────
+        let searchDebounce
+        document.getElementById('showSearchInput').addEventListener('input', e => {
+          clearTimeout(searchDebounce)
+          const q = e.target.value.trim()
+          if (!q) { document.getElementById('showSearchResults').innerHTML = ''; return }
+          searchDebounce = setTimeout(() => renderSearchResults(q), 300)
+        })
+
+        async function renderSearchResults(query) {
+          const container = document.getElementById('showSearchResults')
+          container.innerHTML = '<div style="padding:1rem;color:#555;font-size:0.85rem;">Searching&#x2026;</div>'
+          const shows = await searchShows(query)
+          if (!shows.length) {
+            container.innerHTML = '<div style="padding:1rem;color:#555;font-size:0.85rem;">No shows found</div>'
+            return
+          }
+          container.innerHTML = shows.slice(0, 8).map(s => \`
+            <div onclick="selectShowForAdd('\${s.id}','\${s.name.replace(/'/g,"\\\\'")}','\${s.source}')"
+              style="display:flex;gap:0.75rem;padding:0.75rem 1rem;cursor:pointer;border-bottom:1px solid #1a1a1a;align-items:center;"
+              onmouseenter="this.style.background='#1e1e1e'" onmouseleave="this.style.background=''">
+              \${s.image ? \`<img src="\${s.image}" style="width:36px;height:50px;object-fit:cover;border-radius:3px;flex-shrink:0;" />\` : '<div style="width:36px;height:50px;background:#2a2a2a;border-radius:3px;flex-shrink:0;"></div>'}
+              <div>
+                <div style="font-size:0.9rem;font-weight:500;">\${s.name}</div>
+                <div style="font-size:0.75rem;color:#666;">\${[s.year, s.network].filter(Boolean).join(' · ')}</div>
+              </div>
+            </div>
+          \`).join('')
+        }
+
+        window.selectShowForAdd = async function(id, name, source) {
+          selectedShowForAdd = { id, name, source }
+          selectedSeasonsForAdd = new Set()
+          document.getElementById('addShowBtn').disabled = true
+          const picker = document.getElementById('showSeasonPicker')
+          picker.style.display = 'block'
+          picker.innerHTML = '<div style="color:#555;font-size:0.85rem;">Loading seasons&#x2026;</div>'
+
+          const seasons = await getSeasons(id)
+          if (!seasons.length) {
+            picker.innerHTML = '<div style="color:#555;font-size:0.85rem;">No season info available</div>'
+            document.getElementById('addShowBtn').disabled = false
+            return
+          }
+
+          picker.innerHTML = \`
+            <div style="font-size:0.8rem;font-weight:600;color:#888;margin-bottom:0.5rem;">SEASONS</div>
+            <label style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;cursor:pointer;font-size:0.85rem;">
+              <input type="checkbox" id="allSeasonsCheck" onchange="toggleAllSeasons(this.checked)" checked />
+              All seasons
+            </label>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.25rem;">
+              \${seasons.map(s => \`
+                <label style="display:flex;align-items:center;gap:0.3rem;cursor:pointer;font-size:0.8rem;background:#1e1e1e;border:1px solid #333;border-radius:4px;padding:0.2rem 0.5rem;">
+                  <input type="checkbox" class="season-check" value="\${s.number}" onchange="updateSeasonSelection()" checked />
+                  S\${s.number}\${s.name ? \` · \${s.name}\` : ''}
+                </label>
+              \`).join('')}
+            </div>
+          \`
+          document.getElementById('addShowBtn').disabled = false
+        }
+
+        window.toggleAllSeasons = function(checked) {
+          document.querySelectorAll('.season-check').forEach(cb => cb.checked = checked)
+          updateSeasonSelection()
+        }
+
+        window.updateSeasonSelection = function() {
+          const checked = [...document.querySelectorAll('.season-check:checked')].map(cb => parseInt(cb.value))
+          const total = document.querySelectorAll('.season-check').length
+          selectedSeasonsForAdd = new Set(checked)
+          const allCheck = document.getElementById('allSeasonsCheck')
+          if (allCheck) allCheck.checked = checked.length === total
+        }
+
+        window.addShowToMap = function() {
+          if (!selectedShowForAdd || !window.mind) return
+          const allChecked = document.querySelectorAll('.season-check').length === selectedSeasonsForAdd.size
+          const seasons = allChecked ? [] : [...selectedSeasonsForAdd].sort((a,b)=>a-b)
+          const topic = formatShowTopic(selectedShowForAdd.name, seasons)
+
+          const newNode = { id: 'n' + Date.now(), topic, children: [] }
+          const parent = window.mind.currentNode
+          if (parent && parent.nodeObj) {
+            parent.nodeObj.children = parent.nodeObj.children || []
+            parent.nodeObj.children.push(newNode)
+          } else {
+            window.mind.nodeData.children.push(newNode)
+          }
+          window.mind.refresh()
+
+          selectedShowForAdd = null
+          selectedSeasonsForAdd = new Set()
+          document.getElementById('showSearchInput').value = ''
+          document.getElementById('showSearchResults').innerHTML = ''
+          document.getElementById('showSeasonPicker').style.display = 'none'
+          document.getElementById('addShowBtn').disabled = true
+        }
 
         fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
           .then(r => r.json())
