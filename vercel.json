@@ -1,3 +1,4 @@
 {
-  "alias": ["tv.vaidehiagarwalla.com"]
+  "alias": ["tv.vaidehiagarwalla.com"],
+  "cleanUrls": true
 }
