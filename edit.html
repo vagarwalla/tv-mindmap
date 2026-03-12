@@ -180,10 +180,7 @@
   <script type="module">
     import { convertMindmup, convertToMindmup } from './src/utils.js'
 
-    const HASH    = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
-    const TOKEN   = 'REMOVED'
-    const REPO    = 'vagarwalla/tv-mindmap'
-    const FILE    = 'mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION'
+    const HASH = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
 
     // ─── Password gate ───────────────────────────────────────────────────────
 
@@ -275,7 +272,7 @@
         })
     }
 
-    // ─── Save to GitHub ───────────────────────────────────────────────────────
+    // ─── Save via serverless API ──────────────────────────────────────────────
 
     async function save() {
       const btn = document.getElementById('saveBtn')
@@ -287,36 +284,17 @@
       try {
         const meData = JSON.parse(JSON.stringify(mind.getData()))
         const mindmupJson = convertToMindmup(meData)
-        const content = JSON.stringify(mindmupJson, null, 2)
 
-        // Get current file SHA (required by GitHub API)
-        const metaRes = await fetch(
-          `https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(FILE)}`,
-          { headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github+json' } }
-        )
-        const meta = await metaRes.json()
+        const res = await fetch('/api/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: mindmupJson }),
+        })
 
-        // Base64-encode (handles Unicode)
-        const b64 = btoa(unescape(encodeURIComponent(content)))
-
-        const putRes = await fetch(
-          `https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(FILE)}`,
-          {
-            method: 'PUT',
-            headers: {
-              Authorization: `token ${TOKEN}`,
-              Accept: 'application/vnd.github+json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              message: 'Update TV shows mind map via editor',
-              content: b64,
-              sha: meta.sha,
-            }),
-          }
-        )
-
-        if (!putRes.ok) throw new Error(`GitHub API error: ${putRes.status}`)
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}))
+          throw new Error(err.error || `Server error: ${res.status}`)
+        }
 
         status.textContent = 'Saved! Site updates in ~1 min.'
         status.style.color = '#6ddb6d'

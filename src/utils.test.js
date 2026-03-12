@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getBg, getTextColor, getFontSize, contrastColor, convertNode, convertMindmup } from './utils.js'
+import { getBg, getTextColor, getFontSize, contrastColor, convertNode, convertMindmup, convertToMindmup, fontSizeToMultiplier } from './utils.js'
 
 // ─── getBg ───────────────────────────────────────────────────────────────────
 

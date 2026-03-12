@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TV Shows Mind Map</title>
-  <script src="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixirLite.iife.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixir.css">
+  <script src="https://cdn.jsdelivr.net/npm/mind-elixir@3/dist/MindElixir.iife.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@3/dist/MindElixir.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -89,68 +89,20 @@
   <div id="map"></div>
 
   <script type="module">
-    import { convertMindmup } from './src/utils.js'
+    import { loadMindMap, makeToggleAll } from './src/init.js'
 
-    // ─── Init ────────────────────────────────────────────────────────────────
+    loadMindMap({
+      fetchUrl: 'mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION',
+      MindElixirClass: MindElixir,
+      mapEl: '#map',
+    }).then(mind => {
+      window.mind = mind
+    })
 
-    let allExpanded = false
-
-    fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
-      .then(r => r.json())
-      .then(mup => {
-        const data = convertMindmup(mup)
-
-        window.mind = new MindElixir({
-          el: '#map',
-          direction: MindElixir.SIDE,
-          draggable: true,
-          contextMenu: false,
-          toolBar: false,
-          nodeMenu: false,
-          keypress: true,
-          theme: {
-            name: 'dark',
-            palette: [
-              '#00ccff', '#40e0d0', '#6b8e23', '#33CCCC',
-              '#ee82ee', '#ffc0cb', '#99cc00', '#C0C0C0',
-            ],
-            cssVar: {
-              '--main-color':         '#ffffff',
-              '--main-bgcolor':       '#1a1a2e',
-              '--color':              '#e0e0e0',
-              '--bgcolor':            '#1e1e2e',
-              '--panel-color':        '#f0f0f0',
-              '--panel-bgcolor':      '#2a2a3e',
-              '--panel-border-color': '#444',
-              '--selected-color':     '#ffffff',
-              '--selected-bgcolor':   '#4a4a7a',
-              '--line-color':         '#555577',
-              '--line-width':         '2px',
-              '--root-color':         '#ffffff',
-              '--root-bgcolor':       '#1a1a2e',
-              '--root-radius':        '8px',
-              '--radius':             '5px',
-            },
-          },
-          data,
-        })
-
-        window.mind.init()
-      })
-      .catch(err => {
-        document.getElementById('map').innerHTML =
-          `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555;font-size:0.9rem;">
-            Failed to load mind map: ${err.message}
-          </div>`
-      })
-
-    window.toggleAll = function toggleAll() {
-      if (!window.mind) return
-      allExpanded = !allExpanded
-      allExpanded ? window.mind.expandAll() : window.mind.collapseAll()
-      document.getElementById('toggleBtn').textContent =
-        allExpanded ? 'Collapse All' : 'Expand All'
-    }
+    window.toggleAll = makeToggleAll(
+      () => window.mind,
+      () => document.getElementById('toggleBtn'),
+    )
   </script>
 </body>
 </html>
