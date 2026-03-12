@@ -181,33 +181,22 @@
   </div>
 
   <script>
-    // ─── Show/hide password toggle ────────────────────────────────────────────
+    const HASH = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
+
+    // ─── Show/hide password ───────────────────────────────────────────────────
     function togglePw() {
       const input = document.getElementById('passwordInput')
       const btn = document.getElementById('togglePw')
-      if (input.type === 'password') {
-        input.type = 'text'
-        btn.textContent = 'Hide'
-      } else {
-        input.type = 'password'
-        btn.textContent = 'Show'
-      }
+      input.type = input.type === 'password' ? 'text' : 'password'
+      btn.textContent = input.type === 'password' ? 'Show' : 'Hide'
     }
-  </script>
-
-  <script type="module">
-    import { convertMindmup, convertToMindmup } from './src/utils.js'
-
-    const HASH = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
 
     // ─── Password gate ───────────────────────────────────────────────────────
-
     async function sha256(str) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
     }
 
-    // Skip gate if already unlocked this session
     if (sessionStorage.getItem('editUnlocked') === '1') showEditor()
 
     document.getElementById('passwordForm').addEventListener('submit', async e => {
@@ -235,103 +224,80 @@
     function showEditor() {
       document.getElementById('gate').style.display = 'none'
       document.getElementById('editor').classList.add('visible')
-      initEditor()
+      loadEditor()
     }
 
-    // ─── Editor init ─────────────────────────────────────────────────────────
+    // ─── Load editor module after auth ───────────────────────────────────────
+    function loadEditor() {
+      const s = document.createElement('script')
+      s.type = 'module'
+      s.textContent = `
+        import { convertMindmup, convertToMindmup } from './src/utils.js'
 
-    let mind
+        let mind
 
-    function initEditor() {
-      fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
-        .then(r => r.json())
-        .then(mup => {
-          const data = convertMindmup(mup)
-
-          mind = new MindElixir({
-            el: '#map',
-            direction: MindElixir.SIDE,
-            draggable: true,
-            contextMenu: true,
-            toolBar: true,
-            nodeMenu: true,
-            keypress: true,
-            theme: {
-              name: 'dark',
-              palette: [
-                '#00ccff', '#40e0d0', '#6b8e23', '#33CCCC',
-                '#ee82ee', '#ffc0cb', '#99cc00', '#C0C0C0',
-                '#ff0000', '#FFFFFF', '#e6e6fa', '#A52A2A',
-              ],
-              cssVar: {
-                '--main-color':         '#ffffff',
-                '--main-bgcolor':       '#1a1a2e',
-                '--color':              '#e0e0e0',
-                '--bgcolor':            '#1e1e2e',
-                '--panel-color':        '#f0f0f0',
-                '--panel-bgcolor':      '#2a2a3e',
-                '--panel-border-color': '#444',
-                '--selected-color':     '#ffffff',
-                '--selected-bgcolor':   '#4a4a7a',
-                '--line-color':         '#555577',
-                '--line-width':         '2px',
-                '--root-color':         '#ffffff',
-                '--root-bgcolor':       '#1a1a2e',
-                '--root-radius':        '8px',
-                '--radius':             '5px',
+        fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
+          .then(r => r.json())
+          .then(mup => {
+            const data = convertMindmup(mup)
+            mind = new MindElixir({
+              el: '#map',
+              direction: MindElixir.SIDE,
+              draggable: true,
+              contextMenu: true,
+              toolBar: true,
+              nodeMenu: true,
+              keypress: true,
+              theme: {
+                name: 'dark',
+                palette: ['#00ccff','#40e0d0','#6b8e23','#33CCCC','#ee82ee','#ffc0cb','#99cc00','#C0C0C0','#ff0000','#FFFFFF','#e6e6fa','#A52A2A'],
+                cssVar: {
+                  '--main-color': '#ffffff', '--main-bgcolor': '#1a1a2e',
+                  '--color': '#e0e0e0', '--bgcolor': '#1e1e2e',
+                  '--panel-color': '#f0f0f0', '--panel-bgcolor': '#2a2a3e',
+                  '--panel-border-color': '#444', '--selected-color': '#ffffff',
+                  '--selected-bgcolor': '#4a4a7a', '--line-color': '#555577',
+                  '--line-width': '2px', '--root-color': '#ffffff',
+                  '--root-bgcolor': '#1a1a2e', '--root-radius': '8px', '--radius': '5px',
+                },
               },
-            },
-            data,
+              data,
+            })
+            mind.init()
+            window.mind = mind
+          })
+          .catch(err => {
+            document.getElementById('map').innerHTML =
+              '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#e55">Failed to load: ' + err.message + '</div>'
           })
 
-          mind.init()
-          window.mind = mind
-        })
-        .catch(err => {
-          document.getElementById('map').innerHTML =
-            `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555">
-              Failed to load: ${err.message}
-            </div>`
-        })
-    }
-
-    // ─── Save via serverless API ──────────────────────────────────────────────
-
-    async function save() {
-      const btn = document.getElementById('saveBtn')
-      const status = document.getElementById('saveStatus')
-      btn.disabled = true
-      status.textContent = 'Saving…'
-      status.style.color = '#888'
-
-      try {
-        const meData = JSON.parse(JSON.stringify(mind.getData()))
-        const mindmupJson = convertToMindmup(meData)
-
-        const res = await fetch('/api/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ data: mindmupJson }),
-        })
-
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}))
-          throw new Error(err.error || `Server error: ${res.status}`)
+        window.save = async function() {
+          const btn = document.getElementById('saveBtn')
+          const status = document.getElementById('saveStatus')
+          btn.disabled = true
+          status.textContent = 'Saving…'
+          status.style.color = '#888'
+          try {
+            const mindmupJson = convertToMindmup(JSON.parse(JSON.stringify(mind.getData())))
+            const res = await fetch('/api/save', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ data: mindmupJson }),
+            })
+            if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error || 'Server error ' + res.status) }
+            status.textContent = 'Saved! Site updates in ~1 min.'
+            status.style.color = '#6ddb6d'
+          } catch (err) {
+            status.textContent = 'Error: ' + err.message
+            status.style.color = '#e55'
+          } finally {
+            btn.disabled = false
+            setTimeout(() => { status.textContent = '' }, 5000)
+          }
         }
-
-        status.textContent = 'Saved! Site updates in ~1 min.'
-        status.style.color = '#6ddb6d'
-      } catch (err) {
-        status.textContent = `Error: ${err.message}`
-        status.style.color = '#e55'
-      } finally {
-        btn.disabled = false
-        setTimeout(() => { status.textContent = '' }, 5000)
-      }
+      `
+      document.body.appendChild(s)
     }
-
-    // Expose save to window for inline onclick handler
-    window.save = save
   </script>
 </body>
 </html>
