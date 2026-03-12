@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TV Shows Mind Map</title>
-  <script src="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixirLite.iife.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixirLite.css">
+  <script src="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.iife.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -177,6 +177,15 @@
     }
 
     // ─── Init ────────────────────────────────────────────────────────────────
+
+    // Guard: fail fast with a clear message if the CDN script didn't load
+    if (typeof MindElixirLite === 'undefined') {
+      document.getElementById('map').innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#c55;font-size:0.9rem;">' +
+        'Could not load MindElixirLite from CDN. Check your network connection.' +
+        '</div>'
+      throw new Error('MindElixirLite is not defined — CDN script failed to load')
+    }
 
     let mind
     let allExpanded = false

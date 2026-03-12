@@ -181,7 +181,7 @@
   </div>
 
   <script>
-    const HASH = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
+    const TOKEN = 'dGhld29ybGRpc3F1aWV0aGVyZQ=='
 
     // ─── Show/hide password ───────────────────────────────────────────────────
     function togglePw() {
@@ -192,24 +192,15 @@
     }
 
     // ─── Password gate ───────────────────────────────────────────────────────
-    async function sha256(str) {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
-    }
-
     if (sessionStorage.getItem('editUnlocked') === '1') showEditor()
 
-    document.getElementById('passwordForm').addEventListener('submit', async e => {
+    document.getElementById('passwordForm').addEventListener('submit', e => {
       e.preventDefault()
       const btn = document.getElementById('unlockBtn')
       const error = document.getElementById('gateError')
       const val = document.getElementById('passwordInput').value
-      btn.textContent = 'Checking…'
-      btn.disabled = true
-      error.style.display = 'none'
 
-      const hash = await sha256(val)
-      if (hash === HASH) {
+      if (btoa(val) === TOKEN) {
         sessionStorage.setItem('editUnlocked', '1')
         showEditor()
       } else {

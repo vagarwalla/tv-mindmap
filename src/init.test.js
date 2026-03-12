@@ -210,3 +210,46 @@ describe('makeToggleAll', () => {
     expect(btn2.textContent).toBe('Expand All') // toggle2 not called yet
   })
 })
+
+// ─── CDN / MindElixirClass guard ─────────────────────────────────────────────
+// These tests catch the exact failure mode that kept breaking the page:
+// the CDN global name changed (MindElixir → MindElixirLite) with no warning.
+
+describe('loadMindMap — MindElixirClass guard', () => {
+  let mapEl
+
+  beforeEach(() => {
+    mapEl = document.createElement('div')
+    document.body.appendChild(mapEl)
+    global.fetch = vi.fn(() => Promise.resolve({ json: () => Promise.resolve({}) }))
+  })
+
+  it('throws when MindElixirClass is undefined', async () => {
+    await expect(
+      loadMindMap({ fetchUrl: '/data', MindElixirClass: undefined, mapEl })
+    ).rejects.toThrow(/MindElixirClass is not a constructor/)
+  })
+
+  it('throws when MindElixirClass is null', async () => {
+    await expect(
+      loadMindMap({ fetchUrl: '/data', MindElixirClass: null, mapEl })
+    ).rejects.toThrow(/MindElixirClass is not a constructor/)
+  })
+
+  it('throws when MindElixirClass is a plain object (wrong global name)', async () => {
+    await expect(
+      loadMindMap({ fetchUrl: '/data', MindElixirClass: {}, mapEl })
+    ).rejects.toThrow(/MindElixirClass is not a constructor/)
+  })
+
+  it('renders a user-friendly error in the map element when class is missing', async () => {
+    await loadMindMap({ fetchUrl: '/data', MindElixirClass: undefined, mapEl }).catch(() => {})
+    expect(mapEl.innerHTML).toContain('CDN')
+  })
+
+  it('does not call fetch when MindElixirClass is missing', async () => {
+    await loadMindMap({ fetchUrl: '/data', MindElixirClass: undefined, mapEl }).catch(() => {})
+    expect(fetch).not.toHaveBeenCalled()
+  })
+})
+

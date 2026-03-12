@@ -37,6 +37,17 @@ const MIND_ELIXIR_OPTIONS = {
  * Returns the mind instance on success, or null on failure (also renders error into mapEl).
  */
 export async function loadMindMap({ fetchUrl, MindElixirClass, mapEl }) {
+  if (typeof MindElixirClass !== 'function') {
+    const msg = `MindElixirClass is not a constructor (got ${typeof MindElixirClass}). ` +
+      `Check that the CDN script loaded and the correct global name is used.`
+    const el = typeof mapEl === 'string' ? document.querySelector(mapEl) : mapEl
+    if (el) el.innerHTML =
+      `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#c55;font-size:0.9rem;">
+        Could not load MindElixirLite from CDN. Check your network connection.
+      </div>`
+    throw new Error(msg)
+  }
+
   try {
     const r = await fetch(fetchUrl)
     const mup = await r.json()
