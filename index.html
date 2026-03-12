@@ -198,10 +198,8 @@
         mind = new MindElixirLite({
           el: '#map',
           direction: MindElixirLite.SIDE,
-          draggable: true,
           contextMenu: false,
           toolBar: false,
-          nodeMenu: false,
           keypress: true,
           theme: {
             name: 'dark',
@@ -227,10 +225,9 @@
               '--radius':             '5px',
             },
           },
-          data,
         })
 
-        mind.init()
+        mind.init(data)
       })
       .catch(err => {
         document.getElementById('map').innerHTML =
@@ -242,7 +239,7 @@
     function toggleAll() {
       if (!mind) return
       allExpanded = !allExpanded
-      allExpanded ? mind.expandAll() : mind.collapseAll()
+      mind.expandNodeAll(mind.findEle('root'), allExpanded)
       document.getElementById('toggleBtn').textContent =
         allExpanded ? 'Collapse All' : 'Expand All'
     }

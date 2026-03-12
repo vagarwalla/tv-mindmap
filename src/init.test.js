@@ -7,8 +7,8 @@ import { loadMindMap, makeToggleAll } from './init.js'
 function makeMockMindElixir() {
   const instance = {
     init: vi.fn(),
-    expandAll: vi.fn(),
-    collapseAll: vi.fn(),
+    expandNodeAll: vi.fn(),
+    findEle: vi.fn(() => ({})),
     scale: vi.fn(),
     toCenter: vi.fn(),
   }
@@ -73,35 +73,39 @@ describe('loadMindMap', () => {
     )
   })
 
-  it('passes converted mindmap data with a root node', async () => {
+  it('passes converted mindmap data to init() with a root node', async () => {
     global.fetch = mockFetch(SAMPLE_MUP)
     await loadMindMap({ fetchUrl: '/data', MindElixirClass: MockMindElixir, mapEl })
-    const { data } = MockMindElixir.mock.calls[0][0]
+    const data = MockMindElixir._instance.init.mock.calls[0][0]
     expect(data.nodeData.id).toBe('root')
     expect(data.nodeData.topic).toBe('TV Shows')
   })
 
-  it('passes converted children for top-level ideas', async () => {
+  it('passes converted children to init() for top-level ideas', async () => {
     global.fetch = mockFetch(SAMPLE_MUP)
     await loadMindMap({ fetchUrl: '/data', MindElixirClass: MockMindElixir, mapEl })
-    const { data } = MockMindElixir.mock.calls[0][0]
+    const data = MockMindElixir._instance.init.mock.calls[0][0]
     const topics = data.nodeData.children.map(c => c.topic)
     expect(topics).toContain('Drama')
     expect(topics).toContain('Comedy')
   })
 
-  it('recursively converts nested children', async () => {
+  it('recursively converts nested children passed to init()', async () => {
     global.fetch = mockFetch(SAMPLE_MUP)
     await loadMindMap({ fetchUrl: '/data', MindElixirClass: MockMindElixir, mapEl })
-    const { data } = MockMindElixir.mock.calls[0][0]
+    const data = MockMindElixir._instance.init.mock.calls[0][0]
     const drama = data.nodeData.children.find(c => c.topic === 'Drama')
     expect(drama.children.map(c => c.topic)).toEqual(['Breaking Bad', 'Succession'])
   })
 
-  it('calls mind.init() to render the map', async () => {
+  it('calls mind.init(data) — data is NOT passed to the constructor', async () => {
     global.fetch = mockFetch(SAMPLE_MUP)
     await loadMindMap({ fetchUrl: '/data', MindElixirClass: MockMindElixir, mapEl })
+    // Constructor should NOT receive a data property (v5 breaking change)
+    expect(MockMindElixir.mock.calls[0][0].data).toBeUndefined()
+    // init() must receive the data
     expect(MockMindElixir._instance.init).toHaveBeenCalledOnce()
+    expect(MockMindElixir._instance.init.mock.calls[0][0]).toHaveProperty('nodeData')
   })
 
   it('returns the mind instance', async () => {
@@ -144,10 +148,10 @@ describe('loadMindMap', () => {
     expect(document.getElementById('map').innerHTML).toContain('oops')
   })
 
-  it('preserves node colours from the MindMup file', async () => {
+  it('preserves node colours in data passed to init()', async () => {
     global.fetch = mockFetch(SAMPLE_MUP)
     await loadMindMap({ fetchUrl: '/data', MindElixirClass: MockMindElixir, mapEl })
-    const { data } = MockMindElixir.mock.calls[0][0]
+    const data = MockMindElixir._instance.init.mock.calls[0][0]
     const comedy = data.nodeData.children.find(c => c.topic === 'Comedy')
     expect(comedy.style?.background).toBe('#ffcc00')
   })
@@ -160,7 +164,8 @@ describe('makeToggleAll', () => {
   let btn
 
   beforeEach(() => {
-    mind = { expandAll: vi.fn(), collapseAll: vi.fn() }
+    // v5 API: expandNodeAll(el, bool) replaces expandAll()/collapseAll()
+    mind = { expandNodeAll: vi.fn(), findEle: vi.fn(() => ({ id: 'mock-root-el' })) }
     btn = document.createElement('button')
     btn.textContent = 'Expand All'
   })
@@ -171,33 +176,33 @@ describe('makeToggleAll', () => {
     expect(btn.textContent).toBe('Expand All')
   })
 
-  it('calls expandAll and updates button text on first call', () => {
+  it('calls expandNodeAll(root, true) and updates button text on first call', () => {
     const toggle = makeToggleAll(() => mind, () => btn)
     toggle()
-    expect(mind.expandAll).toHaveBeenCalledOnce()
+    expect(mind.expandNodeAll).toHaveBeenCalledWith(expect.anything(), true)
     expect(btn.textContent).toBe('Collapse All')
   })
 
-  it('calls collapseAll and reverts button text on second call', () => {
+  it('calls expandNodeAll(root, false) and reverts button text on second call', () => {
     const toggle = makeToggleAll(() => mind, () => btn)
     toggle()
     toggle()
-    expect(mind.collapseAll).toHaveBeenCalledOnce()
+    expect(mind.expandNodeAll).toHaveBeenCalledWith(expect.anything(), false)
     expect(btn.textContent).toBe('Expand All')
   })
 
   it('alternates correctly across multiple calls', () => {
     const toggle = makeToggleAll(() => mind, () => btn)
     toggle(); toggle(); toggle()
-    expect(mind.expandAll).toHaveBeenCalledTimes(2)
-    expect(mind.collapseAll).toHaveBeenCalledTimes(1)
+    expect(mind.expandNodeAll).toHaveBeenCalledTimes(3)
+    expect(mind.expandNodeAll.mock.calls.map(c => c[1])).toEqual([true, false, true])
     expect(btn.textContent).toBe('Collapse All')
   })
 
-  it('never calls collapse before first expand', () => {
+  it('uses findEle to get root element for expandNodeAll', () => {
     const toggle = makeToggleAll(() => mind, () => btn)
     toggle()
-    expect(mind.collapseAll).not.toHaveBeenCalled()
+    expect(mind.findEle).toHaveBeenCalledWith('root')
   })
 
   it('each toggle instance has independent state', () => {

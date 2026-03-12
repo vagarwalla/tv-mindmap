@@ -1,10 +1,8 @@
 import { convertMindmup } from './utils.js'
 
 const MIND_ELIXIR_OPTIONS = {
-  draggable: true,
   contextMenu: false,
   toolBar: false,
-  nodeMenu: false,
   keypress: true,
   theme: {
     name: 'dark',
@@ -57,9 +55,8 @@ export async function loadMindMap({ fetchUrl, MindElixirClass, mapEl }) {
       el: mapEl,
       direction: MindElixirClass.SIDE,
       ...MIND_ELIXIR_OPTIONS,
-      data,
     })
-    mind.init()
+    mind.init(data)
     return mind
   } catch (err) {
     const el = typeof mapEl === 'string' ? document.querySelector(mapEl) : mapEl
@@ -83,7 +80,8 @@ export function makeToggleAll(getMind, getBtnEl) {
     const mind = getMind()
     if (!mind) return
     allExpanded = !allExpanded
-    allExpanded ? mind.expandAll() : mind.collapseAll()
+    // v5 API: expandNodeAll(element, expandedBool) replaces expandAll()/collapseAll()
+    mind.expandNodeAll(mind.findEle('root'), allExpanded)
     getBtnEl().textContent = allExpanded ? 'Collapse All' : 'Expand All'
   }
 }
