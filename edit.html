@@ -4,14 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Edit · TV Shows Mind Map</title>
+  <script>
+    // Prevent flash of wrong theme — must run before body renders
+    function initTheme() {
+      const saved = localStorage.getItem('theme') || 'dark'
+      document.documentElement.setAttribute('data-theme', saved)
+      const btn = document.getElementById('themeBtn')
+      if (btn) btn.textContent = saved === 'dark' ? '☀' : '🌙'
+    }
+    initTheme()
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.iife.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@5.9.3/dist/MindElixirLite.css">
   <style>
+    :root {
+      --bg: #0f0f0f;
+      --header-bg: #111111;
+      --border: #222222;
+      --text: #f0f0f0;
+      --btn-bg: #1e1e1e;
+      --btn-border: #333333;
+      --btn-text: #bbbbbb;
+      --dim-text: #555555;
+      --gate-bg: #161616;
+      --gate-border: #2a2a2a;
+      --input-bg: #0f0f0f;
+      --input-border: #333333;
+      --panel-bg: #161616;
+      --panel-border: #2a2a2a;
+    }
+    [data-theme="light"] {
+      --bg: #f8f8f8;
+      --header-bg: #ffffff;
+      --border: #e0e0e0;
+      --text: #111111;
+      --btn-bg: #f0f0f0;
+      --btn-border: #d0d0d0;
+      --btn-text: #444444;
+      --dim-text: #999999;
+      --gate-bg: #ffffff;
+      --gate-border: #e0e0e0;
+      --input-bg: #f8f8f8;
+      --input-border: #d0d0d0;
+      --panel-bg: #ffffff;
+      --panel-border: #e0e0e0;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: #0f0f0f;
-      color: #f0f0f0;
+      background: var(--bg);
+      color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       height: 100vh;
       display: flex;
@@ -23,7 +66,7 @@
     #gate {
       position: fixed;
       inset: 0;
-      background: #0f0f0f;
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -31,8 +74,8 @@
     }
 
     .gate-box {
-      background: #161616;
-      border: 1px solid #2a2a2a;
+      background: var(--gate-bg);
+      border: 1px solid var(--gate-border);
       border-radius: 12px;
       padding: 2.5rem 2rem;
       width: 340px;
@@ -48,16 +91,16 @@
 
     .gate-hint {
       font-size: 0.8rem;
-      color: #555;
+      color: var(--dim-text);
       line-height: 1.5;
     }
 
     .gate-box input[type="password"] {
       width: 100%;
-      background: #0f0f0f;
-      border: 1px solid #333;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: 7px;
-      color: #f0f0f0;
+      color: var(--text);
       font-size: 0.9rem;
       padding: 0.6rem 0.75rem;
       outline: none;
@@ -65,13 +108,13 @@
     }
 
     .gate-box input[type="password"]:focus {
-      border-color: #555;
+      border-color: var(--dim-text);
     }
 
     .gate-box button[type="submit"] {
       width: 100%;
-      background: #f0f0f0;
-      color: #0f0f0f;
+      background: var(--text);
+      color: var(--bg);
       border: none;
       border-radius: 7px;
       padding: 0.6rem;
@@ -100,12 +143,12 @@
 
     header {
       padding: 0.75rem 1.5rem;
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
-      background: #111;
+      background: var(--header-bg);
     }
 
     header h1 { font-size: 1.1rem; font-weight: 600; }
@@ -113,9 +156,9 @@
     .controls { display: flex; gap: 0.5rem; align-items: center; }
 
     .controls button, .controls a {
-      background: #1e1e1e;
-      border: 1px solid #333;
-      color: #bbb;
+      background: var(--btn-bg);
+      border: 1px solid var(--btn-border);
+      color: var(--btn-text);
       padding: 0.3rem 0.7rem;
       border-radius: 5px;
       font-size: 0.75rem;
@@ -125,7 +168,7 @@
       display: inline-block;
     }
 
-    .controls button:hover, .controls a:hover { background: #2a2a2a; color: #fff; }
+    .controls button:hover, .controls a:hover { opacity: 0.85; color: var(--text); }
 
     #saveBtn {
       background: #1a3a1a !important;
@@ -138,7 +181,7 @@
 
     #saveStatus {
       font-size: 0.75rem;
-      color: #555;
+      color: var(--dim-text);
     }
 
     #map { flex: 1; width: 100%; overflow: hidden; }
@@ -173,6 +216,7 @@
         <button onclick="mind && mind.scale(0.8)">－</button>
         <button onclick="mind && mind.toCenter()">⊙ Center</button>
         <button onclick="openSearchPanel()">+ Add Show</button>
+        <button id="themeBtn" onclick="toggleTheme()">☀</button>
         <button id="saveBtn" onclick="save()">Save</button>
         <span id="saveStatus"></span>
         <a href="/">← View</a>
@@ -203,6 +247,47 @@
 
   <script>
     const TOKEN = 'dGhld29ybGRpc3F1aWV0aGVyZQ=='
+
+    // ─── Theme ────────────────────────────────────────────────────────────────
+
+    const DARK_THEME = {
+      name: 'dark',
+      palette: ['#00ccff','#40e0d0','#6b8e23','#33CCCC','#ee82ee','#ffc0cb','#99cc00','#C0C0C0'],
+      cssVar: { '--main-color':'#ffffff','--main-bgcolor':'#1a1a2e','--color':'#e0e0e0',
+        '--bgcolor':'#1e1e2e','--panel-color':'#f0f0f0','--panel-bgcolor':'#2a2a3e',
+        '--panel-border-color':'#444','--selected-color':'#ffffff','--selected-bgcolor':'#4a4a7a',
+        '--line-color':'#555577','--line-width':'2px','--root-color':'#ffffff',
+        '--root-bgcolor':'#1a1a2e','--root-radius':'8px','--radius':'5px' }
+    }
+
+    const LIGHT_THEME = {
+      name: 'light',
+      palette: ['#0066cc','#009999','#336600','#006666','#9900cc','#cc0066','#669900','#666666'],
+      cssVar: { '--main-color':'#111','--main-bgcolor':'#e8f0fe','--color':'#222',
+        '--bgcolor':'#f0f4ff','--panel-color':'#111','--panel-bgcolor':'#ffffff',
+        '--panel-border-color':'#ccc','--selected-color':'#111','--selected-bgcolor':'#c8d8ff',
+        '--line-color':'#8899aa','--line-width':'2px','--root-color':'#111',
+        '--root-bgcolor':'#c8d8fe','--root-radius':'8px','--radius':'5px' }
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('theme') || 'dark'
+      document.documentElement.setAttribute('data-theme', saved)
+      document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀' : '🌙'
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark'
+      const next = current === 'dark' ? 'light' : 'dark'
+      document.documentElement.setAttribute('data-theme', next)
+      localStorage.setItem('theme', next)
+      document.getElementById('themeBtn').textContent = next === 'dark' ? '☀' : '🌙'
+      if (window.mind) {
+        window.mind.changeTheme(next === 'dark' ? DARK_THEME : LIGHT_THEME)
+      }
+    }
+
+    initTheme()
 
     // ─── Show/hide password ───────────────────────────────────────────────────
     function togglePw() {
@@ -365,6 +450,30 @@
           document.getElementById('addShowBtn').disabled = true
         }
 
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark'
+        const DARK_ME_THEME = {
+          name: 'dark',
+          palette: ['#00ccff','#40e0d0','#6b8e23','#33CCCC','#ee82ee','#ffc0cb','#99cc00','#C0C0C0','#ff0000','#FFFFFF','#e6e6fa','#A52A2A'],
+          cssVar: {
+            '--main-color': '#ffffff', '--main-bgcolor': '#1a1a2e',
+            '--color': '#e0e0e0', '--bgcolor': '#1e1e2e',
+            '--panel-color': '#f0f0f0', '--panel-bgcolor': '#2a2a3e',
+            '--panel-border-color': '#444', '--selected-color': '#ffffff',
+            '--selected-bgcolor': '#4a4a7a', '--line-color': '#555577',
+            '--line-width': '2px', '--root-color': '#ffffff',
+            '--root-bgcolor': '#1a1a2e', '--root-radius': '8px', '--radius': '5px',
+          },
+        }
+        const LIGHT_ME_THEME = {
+          name: 'light',
+          palette: ['#0066cc','#009999','#336600','#006666','#9900cc','#cc0066','#669900','#666666'],
+          cssVar: { '--main-color':'#111','--main-bgcolor':'#e8f0fe','--color':'#222',
+            '--bgcolor':'#f0f4ff','--panel-color':'#111','--panel-bgcolor':'#ffffff',
+            '--panel-border-color':'#ccc','--selected-color':'#111','--selected-bgcolor':'#c8d8ff',
+            '--line-color':'#8899aa','--line-width':'2px','--root-color':'#111',
+            '--root-bgcolor':'#c8d8fe','--root-radius':'8px','--radius':'5px' }
+        }
+
         fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
           .then(r => r.json())
           .then(mup => {
@@ -375,19 +484,7 @@
               contextMenu: false,
               toolBar: false,
               keypress: true,
-              theme: {
-                name: 'dark',
-                palette: ['#00ccff','#40e0d0','#6b8e23','#33CCCC','#ee82ee','#ffc0cb','#99cc00','#C0C0C0','#ff0000','#FFFFFF','#e6e6fa','#A52A2A'],
-                cssVar: {
-                  '--main-color': '#ffffff', '--main-bgcolor': '#1a1a2e',
-                  '--color': '#e0e0e0', '--bgcolor': '#1e1e2e',
-                  '--panel-color': '#f0f0f0', '--panel-bgcolor': '#2a2a3e',
-                  '--panel-border-color': '#444', '--selected-color': '#ffffff',
-                  '--selected-bgcolor': '#4a4a7a', '--line-color': '#555577',
-                  '--line-width': '2px', '--root-color': '#ffffff',
-                  '--root-bgcolor': '#1a1a2e', '--root-radius': '8px', '--radius': '5px',
-                },
-              },
+              theme: currentTheme === 'light' ? LIGHT_ME_THEME : DARK_ME_THEME,
             })
             mind.init(data)
             window.mind = mind
@@ -401,7 +498,7 @@
           const btn = document.getElementById('saveBtn')
           const status = document.getElementById('saveStatus')
           btn.disabled = true
-          status.textContent = 'Saving…'
+          status.textContent = 'Saving\u2026'
           status.style.color = '#888'
           try {
             const mindmupJson = convertToMindmup(JSON.parse(JSON.stringify(mind.getData())))
