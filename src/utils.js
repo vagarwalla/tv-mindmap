@@ -87,4 +87,56 @@ function convertMindmup(mup) {
   return { nodeData: root }
 }
 
-export { getBg, getTextColor, getFontSize, contrastColor, convertNode, convertMindmup }
+// ─── Mind Elixir → MindMup converter (for saving) ───────────────────────────
+
+function fontSizeToMultiplier(fontSize) {
+  // Reverse of getFontSize: '15px' → 1.25, '18px' → 1.5, etc.
+  if (!fontSize) return 1
+  const px = parseFloat(fontSize)
+  return Math.round((px / 12) * 4) / 4 // round to nearest 0.25
+}
+
+function convertMeNode(meNode, index) {
+  const node = {
+    id: isNaN(Number(meNode.id)) ? meNode.id : Number(meNode.id),
+    title: meNode.topic || '',
+    ideas: {},
+    attr: { style: {} },
+  }
+
+  const s = meNode.style || {}
+  if (s.background) node.attr.style.background = s.background
+  if (s.color && s.color !== contrastColor(s.background || '')) node.attr.style['text'] = { color: s.color }
+  if (s.fontSize) {
+    const m = fontSizeToMultiplier(s.fontSize)
+    if (m !== 1) node.attr.style.fontMultiplier = m
+  }
+  if (!Object.keys(node.attr.style).length) delete node.attr
+
+  if (meNode.children?.length) {
+    meNode.children.forEach((child, i) => {
+      node.ideas[String(i + 1)] = convertMeNode(child, i + 1)
+    })
+  }
+
+  return node
+}
+
+function convertToMindmup(meData) {
+  const root = meData.nodeData
+  const mup = {
+    id: 'root',
+    formatVersion: 3,
+    ideas: {},
+  }
+
+  if (root.children?.length) {
+    root.children.forEach((child, i) => {
+      mup.ideas[String(i + 1)] = convertMeNode(child, i + 1)
+    })
+  }
+
+  return mup
+}
+
+export { getBg, getTextColor, getFontSize, contrastColor, convertNode, convertMindmup, convertToMindmup, fontSizeToMultiplier }

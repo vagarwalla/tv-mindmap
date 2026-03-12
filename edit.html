@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit · TV Shows Mind Map</title>
+  <script src="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixirLite.iife.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir/dist/MindElixir.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0f0f;
+      color: #f0f0f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Password gate ── */
+    #gate {
+      position: fixed;
+      inset: 0;
+      background: #0f0f0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .gate-box {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .gate-box h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .gate-hint {
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .gate-box input[type="password"] {
+      width: 100%;
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 7px;
+      color: #f0f0f0;
+      font-size: 0.9rem;
+      padding: 0.6rem 0.75rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .gate-box input[type="password"]:focus {
+      border-color: #555;
+    }
+
+    .gate-box button[type="submit"] {
+      width: 100%;
+      background: #f0f0f0;
+      color: #0f0f0f;
+      border: none;
+      border-radius: 7px;
+      padding: 0.6rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .gate-box button[type="submit"]:hover { opacity: 0.85; }
+
+    #gateError {
+      font-size: 0.8rem;
+      color: #e55;
+      display: none;
+    }
+
+    /* ── Editor ── */
+    #editor {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #editor.visible { display: flex; }
+
+    header {
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: #111;
+    }
+
+    header h1 { font-size: 1.1rem; font-weight: 600; }
+
+    .controls { display: flex; gap: 0.5rem; align-items: center; }
+
+    .controls button, .controls a {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #bbb;
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      display: inline-block;
+    }
+
+    .controls button:hover, .controls a:hover { background: #2a2a2a; color: #fff; }
+
+    #saveBtn {
+      background: #1a3a1a !important;
+      border-color: #2a5a2a !important;
+      color: #6ddb6d !important;
+    }
+
+    #saveBtn:hover { background: #1e4a1e !important; }
+    #saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #saveStatus {
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    #map { flex: 1; width: 100%; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- Password gate -->
+  <div id="gate">
+    <div class="gate-box">
+      <h2>Editor Access</h2>
+      <p class="gate-hint">What do members of V.F.D. say when they arrive at a secret meeting?</p>
+      <form id="passwordForm">
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
+          <input type="password" id="passwordInput" placeholder="Password" autofocus autocomplete="current-password" />
+          <button type="submit">Unlock</button>
+          <p id="gateError">Wrong password. Try again.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Editor (shown after auth) -->
+  <div id="editor">
+    <header>
+      <h1>Edit · TV Shows</h1>
+      <div class="controls">
+        <button onclick="mind && mind.scale(1.25)">＋</button>
+        <button onclick="mind && mind.scale(0.8)">－</button>
+        <button onclick="mind && mind.toCenter()">⊙ Center</button>
+        <button id="saveBtn" onclick="save()">Save</button>
+        <span id="saveStatus"></span>
+        <a href="/">← View</a>
+      </div>
+    </header>
+    <div id="map"></div>
+  </div>
+
+  <script type="module">
+    import { convertMindmup, convertToMindmup } from './src/utils.js'
+
+    const HASH    = '0a0d4a98d2be3bd9c6323c23e8923033505e12a2132572f07d2c28dedf012b4d'
+    const TOKEN   = 'REMOVED'
+    const REPO    = 'vagarwalla/tv-mindmap'
+    const FILE    = 'mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION'
+
+    // ─── Password gate ───────────────────────────────────────────────────────
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
+    }
+
+    async function unlock(password) {
+      return (await sha256(password)) === HASH
+    }
+
+    // Skip gate if already unlocked this session
+    if (sessionStorage.getItem('editUnlocked') === '1') showEditor()
+
+    document.getElementById('passwordForm').addEventListener('submit', async e => {
+      e.preventDefault()
+      const val = document.getElementById('passwordInput').value
+      if (await unlock(val)) {
+        sessionStorage.setItem('editUnlocked', '1')
+        showEditor()
+      } else {
+        document.getElementById('gateError').style.display = 'block'
+        document.getElementById('passwordInput').value = ''
+        document.getElementById('passwordInput').focus()
+      }
+    })
+
+    function showEditor() {
+      document.getElementById('gate').style.display = 'none'
+      document.getElementById('editor').classList.add('visible')
+      initEditor()
+    }
+
+    // ─── Editor init ─────────────────────────────────────────────────────────
+
+    let mind
+
+    function initEditor() {
+      fetch('mindmap-assets/TV SHOWS MINDMAP MINDMUP TELEVISION')
+        .then(r => r.json())
+        .then(mup => {
+          const data = convertMindmup(mup)
+
+          mind = new MindElixir({
+            el: '#map',
+            direction: MindElixir.SIDE,
+            draggable: true,
+            contextMenu: true,
+            toolBar: true,
+            nodeMenu: true,
+            keypress: true,
+            theme: {
+              name: 'dark',
+              palette: [
+                '#00ccff', '#40e0d0', '#6b8e23', '#33CCCC',
+                '#ee82ee', '#ffc0cb', '#99cc00', '#C0C0C0',
+                '#ff0000', '#FFFFFF', '#e6e6fa', '#A52A2A',
+              ],
+              cssVar: {
+                '--main-color':         '#ffffff',
+                '--main-bgcolor':       '#1a1a2e',
+                '--color':              '#e0e0e0',
+                '--bgcolor':            '#1e1e2e',
+                '--panel-color':        '#f0f0f0',
+                '--panel-bgcolor':      '#2a2a3e',
+                '--panel-border-color': '#444',
+                '--selected-color':     '#ffffff',
+                '--selected-bgcolor':   '#4a4a7a',
+                '--line-color':         '#555577',
+                '--line-width':         '2px',
+                '--root-color':         '#ffffff',
+                '--root-bgcolor':       '#1a1a2e',
+                '--root-radius':        '8px',
+                '--radius':             '5px',
+              },
+            },
+            data,
+          })
+
+          mind.init()
+          window.mind = mind
+        })
+        .catch(err => {
+          document.getElementById('map').innerHTML =
+            `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555">
+              Failed to load: ${err.message}
+            </div>`
+        })
+    }
+
+    // ─── Save to GitHub ───────────────────────────────────────────────────────
+
+    async function save() {
+      const btn = document.getElementById('saveBtn')
+      const status = document.getElementById('saveStatus')
+      btn.disabled = true
+      status.textContent = 'Saving…'
+      status.style.color = '#888'
+
+      try {
+        const meData = JSON.parse(JSON.stringify(mind.getData()))
+        const mindmupJson = convertToMindmup(meData)
+        const content = JSON.stringify(mindmupJson, null, 2)
+
+        // Get current file SHA (required by GitHub API)
+        const metaRes = await fetch(
+          `https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(FILE)}`,
+          { headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github+json' } }
+        )
+        const meta = await metaRes.json()
+
+        // Base64-encode (handles Unicode)
+        const b64 = btoa(unescape(encodeURIComponent(content)))
+
+        const putRes = await fetch(
+          `https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(FILE)}`,
+          {
+            method: 'PUT',
+            headers: {
+              Authorization: `token ${TOKEN}`,
+              Accept: 'application/vnd.github+json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: 'Update TV shows mind map via editor',
+              content: b64,
+              sha: meta.sha,
+            }),
+          }
+        )
+
+        if (!putRes.ok) throw new Error(`GitHub API error: ${putRes.status}`)
+
+        status.textContent = 'Saved! Site updates in ~1 min.'
+        status.style.color = '#6ddb6d'
+      } catch (err) {
+        status.textContent = `Error: ${err.message}`
+        status.style.color = '#e55'
+      } finally {
+        btn.disabled = false
+        setTimeout(() => { status.textContent = '' }, 5000)
+      }
+    }
+
+    // Expose save to window for inline onclick handler
+    window.save = save
+  </script>
+</body>
+</html>
