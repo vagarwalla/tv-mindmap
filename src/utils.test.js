@@ -288,3 +288,167 @@ describe('convertMindmup', () => {
     expect(drama.children.map(c => c.topic)).toEqual(['Breaking Bad', 'Succession'])
   })
 })
+
+// ─── fontSizeToMultiplier ─────────────────────────────────────────────────────
+
+describe('fontSizeToMultiplier', () => {
+  it('returns 1 for falsy input', () => {
+    expect(fontSizeToMultiplier(null)).toBe(1)
+    expect(fontSizeToMultiplier(undefined)).toBe(1)
+    expect(fontSizeToMultiplier('')).toBe(1)
+  })
+
+  it('inverts getFontSize for known multipliers', () => {
+    expect(fontSizeToMultiplier('12px')).toBe(1)
+    expect(fontSizeToMultiplier('15px')).toBe(1.25)
+    expect(fontSizeToMultiplier('18px')).toBe(1.5)
+  })
+
+  it('rounds to nearest 0.25', () => {
+    // 13px / 12 = 1.083 → rounds to 1.0
+    expect(fontSizeToMultiplier('13px')).toBe(1)
+    // 14px / 12 = 1.166 → rounds to 1.25
+    expect(fontSizeToMultiplier('14px')).toBe(1.25)
+  })
+})
+
+// ─── convertToMindmup ────────────────────────────────────────────────────────
+
+describe('convertToMindmup', () => {
+  it('produces the required MindMup envelope', () => {
+    const mup = convertToMindmup({ nodeData: { id: 'root', topic: 'TV Shows', children: [] } })
+    expect(mup.id).toBe('root')
+    expect(mup.formatVersion).toBe(3)
+    expect(mup.ideas).toEqual({})
+  })
+
+  it('converts children into numbered ideas', () => {
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [
+          { id: 'a', topic: 'Drama', children: [] },
+          { id: 'b', topic: 'Comedy', children: [] },
+        ],
+      },
+    })
+    expect(Object.keys(mup.ideas)).toEqual(['1', '2'])
+    expect(mup.ideas['1'].title).toBe('Drama')
+    expect(mup.ideas['2'].title).toBe('Comedy')
+  })
+
+  it('coerces numeric string ids back to numbers', () => {
+    const mup = convertToMindmup({
+      nodeData: { id: 'root', topic: 'TV Shows', children: [{ id: '42', topic: 'Sci-Fi', children: [] }] },
+    })
+    expect(mup.ideas['1'].id).toBe(42)
+  })
+
+  it('keeps non-numeric ids as strings', () => {
+    const mup = convertToMindmup({
+      nodeData: { id: 'root', topic: 'TV Shows', children: [{ id: 'root', topic: 'Root', children: [] }] },
+    })
+    expect(mup.ideas['1'].id).toBe('root')
+  })
+
+  it('preserves background colour', () => {
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [{ id: '1', topic: 'Drama', style: { background: '#ff0000' }, children: [] }],
+      },
+    })
+    expect(mup.ideas['1'].attr.style.background).toBe('#ff0000')
+  })
+
+  it('omits attr when node has no style', () => {
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [{ id: '1', topic: 'Drama', children: [] }],
+      },
+    })
+    expect(mup.ideas['1'].attr).toBeUndefined()
+  })
+
+  it('does not store colour when it matches the auto-contrast colour', () => {
+    // If the stored color is just the contrast of the background, it shouldn't be persisted
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [{ id: '1', topic: 'Drama', style: { background: '#000000', color: '#ffffff' }, children: [] }],
+      },
+    })
+    // #ffffff is contrast of #000000 → should NOT be stored as an explicit text colour
+    expect(mup.ideas['1'].attr?.style?.text).toBeUndefined()
+  })
+
+  it('stores colour when it differs from auto-contrast', () => {
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [{ id: '1', topic: 'Drama', style: { background: '#000000', color: '#ff0000' }, children: [] }],
+      },
+    })
+    expect(mup.ideas['1'].attr.style.text).toEqual({ color: '#ff0000' })
+  })
+
+  it('recursively converts nested children', () => {
+    const mup = convertToMindmup({
+      nodeData: {
+        id: 'root', topic: 'TV Shows',
+        children: [{
+          id: '1', topic: 'Drama',
+          children: [{ id: '2', topic: 'Breaking Bad', children: [] }],
+        }],
+      },
+    })
+    expect(mup.ideas['1'].ideas['1'].title).toBe('Breaking Bad')
+  })
+})
+
+// ─── Round-trip: convertMindmup → convertToMindmup ───────────────────────────
+
+describe('round-trip conversion', () => {
+  const ORIGINAL = {
+    id: 'root',
+    formatVersion: 3,
+    ideas: {
+      '1': {
+        id: 1, title: 'Drama',
+        attr: { style: { background: '#00ccff', fontMultiplier: 1.25 } },
+        ideas: {
+          '1': { id: 2, title: 'Breaking Bad' },
+          '2': { id: 3, title: 'Succession' },
+        },
+      },
+      '2': { id: 4, title: 'Comedy' },
+    },
+  }
+
+  it('preserves topics through a full round-trip', () => {
+    const meData = convertMindmup(ORIGINAL)
+    const mup = convertToMindmup(meData)
+    expect(mup.ideas['1'].title).toBe('Drama')
+    expect(mup.ideas['2'].title).toBe('Comedy')
+  })
+
+  it('preserves nested topics through a full round-trip', () => {
+    const meData = convertMindmup(ORIGINAL)
+    const mup = convertToMindmup(meData)
+    expect(mup.ideas['1'].ideas['1'].title).toBe('Breaking Bad')
+    expect(mup.ideas['1'].ideas['2'].title).toBe('Succession')
+  })
+
+  it('preserves background colour through a full round-trip', () => {
+    const meData = convertMindmup(ORIGINAL)
+    const mup = convertToMindmup(meData)
+    expect(mup.ideas['1'].attr.style.background).toBe('#00ccff')
+  })
+
+  it('preserves fontMultiplier through a full round-trip', () => {
+    const meData = convertMindmup(ORIGINAL)
+    const mup = convertToMindmup(meData)
+    expect(mup.ideas['1'].attr.style.fontMultiplier).toBe(1.25)
+  })
+})

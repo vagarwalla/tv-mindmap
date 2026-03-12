@@ -202,6 +202,7 @@ describe('makeToggleAll', () => {
 
   it('each toggle instance has independent state', () => {
     const btn2 = document.createElement('button')
+    btn2.textContent = 'Expand All'
     const toggle1 = makeToggleAll(() => mind, () => btn)
     const toggle2 = makeToggleAll(() => mind, () => btn2)
     toggle1()
